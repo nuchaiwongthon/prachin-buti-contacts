@@ -1,18 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  AlertController,
-  LoadingController,
-  MenuController,
-  NavController,
-  ToastController,
-} from "@ionic/angular";
-import * as firebase from "firebase";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController, LoadingController, MenuController, NavController, ToastController } from '@ionic/angular';
+import * as firebase from 'firebase';
 
 @Component({
-  selector: "app-customer-register",
-  templateUrl: "./customer-register.page.html",
-  styleUrls: ["./customer-register.page.scss"],
+  selector: 'app-customer-register',
+  templateUrl: './customer-register.page.html',
+  styleUrls: ['./customer-register.page.scss'],
 })
 export class CustomerRegisterPage implements OnInit {
   public onRegisterForm: FormGroup;
@@ -23,7 +17,7 @@ export class CustomerRegisterPage implements OnInit {
   email: any;
   password: any;
   rePassword: any;
-  dataLength = [];
+  dataRun: any = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -36,10 +30,11 @@ export class CustomerRegisterPage implements OnInit {
     firebase
       .database()
       .ref(`user/`)
+      .limitToLast(1)
       .on(`value`, (resp) => {
         resp.forEach((snapshot) => {
-          const item = snapshot.val();
-          this.dataLength.push(item);
+          let item = snapshot.key;
+          this.dataRun = Number(item.replace('U', ''));
         });
       });
   }
@@ -50,7 +45,7 @@ export class CustomerRegisterPage implements OnInit {
       address: [null, Validators.compose([Validators.required])],
       username: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])],
-      "re-password": [null, Validators.compose([Validators.required])],
+      're-password': [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -62,8 +57,8 @@ export class CustomerRegisterPage implements OnInit {
         .then((value) => {
           firebase
             .database()
-            .ref(`user`)
-            .child(`U0000${Number(this.dataLength.length) + 1}`)
+            .ref(`user/`)
+            .child(`U0000${Number(this.dataRun) + 1}`)
             .set({
               name: this.fullname,
               address: this.address,
@@ -71,10 +66,11 @@ export class CustomerRegisterPage implements OnInit {
               password: this.password,
               verify: 0,
               id_type: `UT00003`,
+              uid: value.user.uid,
             })
             .then((isSuccess) => {
               // this.showAlert('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับข้อมูล\nรอเจ้าหน้าที่ทำการตรวจสอบ');
-              this.navCtrl.navigateRoot("/");
+              this.navCtrl.navigateRoot('/');
             })
             .catch((err) => {
               this.showToast(err.message);
@@ -102,7 +98,7 @@ export class CustomerRegisterPage implements OnInit {
           this.showToast(err.message);
         });
     } else {
-      this.showToast("รหัสผ่านไม่ตรงกัน");
+      this.showToast('รหัสผ่านไม่ตรงกัน');
     }
   }
 
@@ -120,11 +116,11 @@ export class CustomerRegisterPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: "ปิด",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'ปิด',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: () => {
-            this.navCtrl.navigateRoot("/");
+            this.navCtrl.navigateRoot('/');
           },
         },
       ],
@@ -133,6 +129,6 @@ export class CustomerRegisterPage implements OnInit {
   }
 
   back() {
-    this.navCtrl.navigateRoot("/select-register");
+    this.navCtrl.navigateRoot('/select-register');
   }
 }

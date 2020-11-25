@@ -1,18 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  NavController,
-  MenuController,
-  ToastController,
-  AlertController,
-  LoadingController,
-} from "@ionic/angular";
-import * as firebase from "firebase";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
+import * as firebase from 'firebase';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.page.html",
-  styleUrls: ["./login.page.scss"],
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
@@ -69,26 +63,26 @@ export class LoginPage implements OnInit {
 
   async forgotPass() {
     const alert = await this.alertCtrl.create({
-      header: "Forgot Password?",
-      message: "Enter you email address to send a reset link password.",
+      header: 'Forgot Password?',
+      message: 'Enter you email address to send a reset link password.',
       inputs: [
         {
-          name: "email",
-          type: "email",
-          placeholder: "Email",
+          name: 'email',
+          type: 'email',
+          placeholder: 'Email',
         },
       ],
       buttons: [
         {
-          text: "Cancel",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: () => {
-            console.log("Confirm Cancel");
+            console.log('Confirm Cancel');
           },
         },
         {
-          text: "Confirm",
+          text: 'Confirm',
           handler: async () => {
             const loader = await this.loadingCtrl.create({
               duration: 2000,
@@ -98,9 +92,9 @@ export class LoginPage implements OnInit {
             loader.onWillDismiss().then(async (l) => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
-                message: "Email was sended successfully.",
+                message: 'Email was sended successfully.',
                 duration: 3000,
-                position: "bottom",
+                position: 'bottom',
               });
 
               toast.present();
@@ -123,7 +117,7 @@ export class LoginPage implements OnInit {
 
   // // //
   goToRegister() {
-    this.navCtrl.navigateRoot("/select-register");
+    this.navCtrl.navigateRoot('/select-register');
   }
 
   async goToHome() {
@@ -134,32 +128,56 @@ export class LoginPage implements OnInit {
         this.user = firebase.auth().currentUser;
         if (this.user !== null) {
           const email = this.user.email;
-          if (email === "admin@gmail.com") {
-            this.navCtrl.navigateRoot("/admin-check-user");
+          if (email === 'admin@gmail.com') {
+            this.navCtrl.navigateRoot('/admin-check-user');
           } else {
-            firebase
-              .database()
-              .ref("user/" + this.user.uid)
-              .on("value", (snapshot) => {
-                const userData = snapshot.val();
-                console.log(userData);
-                if (userData.verify === 0) {
-                  this.showToast("รอเจ้าหน้าที่ทำการตรวจสอบ");
-                  firebase.auth().signOut();
-                } else if (userData.verify === 2) {
-                  this.showToast("บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ");
-                  firebase.auth().signOut();
-                } else {
-                  if (userData.position === 0) {
-                    this.navCtrl.navigateRoot("/officer-ministry");
+            const playersRef = firebase.database().ref('user/');
+            firebase.database();
+            playersRef
+              .orderByChild('email')
+              .equalTo(email)
+              .on('child_added', (data) => {
+                localStorage.setItem('user', data.val().id);
+                console.log('Start at filter: ' + data.val().email);
+                if (data.val().email && data.val().password === this.password) {
+                  if (data.val().verify === 0) {
+                    this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
+                    firebase.auth().signOut();
+                  } else if (data.val().verify === 2) {
+                    this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
+                    firebase.auth().signOut();
                   } else {
-                    this.navCtrl.navigateRoot("/officer-ministry");
+                    // if (data.val().id_type === 'UT00002') {
+                    this.navCtrl.navigateRoot('/officer-ministry');
+                    // }
                   }
+                } else {
+                  this.showToast('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
                 }
               });
+            // firebase
+            //   .database()
+            //   .ref('user/' + this.user.uid)
+            //   .on('value', (snapshot) => {
+            //     const userData = snapshot.val();
+            //     console.log(userData);
+            //     if (userData.verify === 0) {
+            //       this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
+            //       firebase.auth().signOut();
+            //     } else if (userData.verify === 2) {
+            //       this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
+            //       firebase.auth().signOut();
+            //     } else {
+            //       if (userData.position === 0) {
+            //         this.navCtrl.navigateRoot('/officer-ministry');
+            //       } else {
+            //         this.navCtrl.navigateRoot('/officer-ministry');
+            //       }
+            //     }
+            //   });
           }
         } else {
-          this.showToast("ไม่มีผู้ใช้งานนี้ในระบบ");
+          this.showToast('ไม่มีผู้ใช้งานนี้ในระบบ');
           firebase.auth().signOut();
         }
       });
