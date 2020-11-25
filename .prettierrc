@@ -1,0 +1,22 @@
+{
+  "bracketSpacing": true,
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 150,
+  "tabWidth": 2,
+  "complexity": [
+    true,
+    {
+      "max": 20
+    }
+  ],
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": true,
+  "newline-per-chained-call": [
+    true,
+    {
+      "ignoreChainWithDepth": 4
+    }
+  ],
+  "no-shadowed-variable": false
+}
