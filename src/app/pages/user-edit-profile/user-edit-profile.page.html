@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button size="small" shape="round" color="medium" (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="light" class="text1">แก้ไขข้อมูลส่วนตัว</ion-text>
+      </ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="onRegisterForm" class="list-form">
+    <ion-item no-padding no-margin class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="person" item-start></ion-icon>
+        ชื่อ-นามสกุล
+      </ion-label>
+      <ion-input color="secondary" type="text" formControlName="fullName" [(ngModel)]="fullname"></ion-input>
+    </ion-item>
+    <p ion-text class="text08"
+       *ngIf="onRegisterForm.get('fullName').touched && onRegisterForm.get('fullName').hasError('required')">
+      <ion-text color="warning">
+        กรุณากรอกชื่อ-นามสกุล
+      </ion-text>
+    </p>
+
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="pin" item-start></ion-icon>
+        ที่อยู่
+      </ion-label>
+      <ion-input color="secondary" type="text" formControlName="address" [(ngModel)]="address"></ion-input>
+    </ion-item>
+    <p ion-text class="text08"
+       *ngIf="onRegisterForm.get('address').touched && onRegisterForm.get('address').hasError('required')">
+      <ion-text color="warning">
+        กรุณากรอกที่อยู่
+      </ion-text>
+    </p>
+
+    <ion-text class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="mail" item-start></ion-icon>
+        Username (ระบุ Email)
+      </ion-label>
+      <ion-input color="secondary" type="text" formControlName="username" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="lock" item-start></ion-icon>
+        Password
+      </ion-label>
+      <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="lock" item-start></ion-icon>
+        New Password
+      </ion-label>
+      <ion-input color="secondary" type="password" formControlName="new-password" [(ngModel)]="newPassword"></ion-input>
+    </ion-item>
+
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="lock" item-start></ion-icon>
+        Re-Password
+      </ion-label>
+      <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>
+    </ion-item>
+
+    <div style="margin-top: 20px;">
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="updateProfile()"
+                  [disabled]="!onRegisterForm.valid" tappable>
+        <ion-icon name="checkmark"></ion-icon>
+        แก้ไขข้อมูล
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

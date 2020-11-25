@@ -1,0 +1,102 @@
+<ion-content padding class="login auth-page">
+    <div class="auth-content" padding-top="12px">
+        <!-- Logo -->
+        <div padding-horizontal text-center>
+            <h5 no-margin>
+                <ion-text color="light" class="fw500">
+                    <ion-text color="secondary">ลงทะเบียน<br/>สำหรับผู้ใช้งานทั่วไป</ion-text>
+                </ion-text>
+            </h5>
+        </div>
+
+        <form [formGroup]="onRegisterForm" class="list-form">
+            <div style="margin-top: 20px;">
+                <ion-text color="light">ลำดับ CM-{{number}}</ion-text>
+            </div>
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="person" item-start></ion-icon>
+                    ชื่อ-นามสกุล
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="fullName" [(ngModel)]="fullname"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onRegisterForm.get('fullName').touched && onRegisterForm.get('fullName').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกชื่อ-นามสกุล
+                </ion-text>
+            </p>
+
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="pin" item-start></ion-icon>
+                    ที่อยู่
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="address" [(ngModel)]="address"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onRegisterForm.get('address').touched && onRegisterForm.get('address').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกที่อยู่
+                </ion-text>
+            </p>
+
+            <ion-text color="light" class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="mail" item-start></ion-icon>
+                    Username (ระบุ Email)
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="username" [(ngModel)]="email"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onRegisterForm.get('username').touched && onRegisterForm.get('username').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกอีเมล
+                </ion-text>
+            </p>
+
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="lock" item-start></ion-icon>
+                    Password
+                </ion-label>
+                <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onRegisterForm.get('password').touched && onRegisterForm.get('password').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกรหัสผ่าน
+                </ion-text>
+            </p>
+
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="lock" item-start></ion-icon>
+                    Re-Password
+                </ion-label>
+                <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onRegisterForm.get('re-password').touched && onRegisterForm.get('re-password').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกรหัสผ่านอีกครั้ง
+                </ion-text>
+            </p>
+
+            <div style="margin-top: 20px;">
+                <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="doRegister()"
+                            [disabled]="!onRegisterForm.valid" tappable>
+                    <ion-icon name="checkmark"></ion-icon>
+                    ลงทะเบียน
+                </ion-button>
+            </div>
+            <div style="margin-top: 10px;">
+                <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="back()" tappable>
+                    <ion-icon name="close"></ion-icon>
+                    ยกเลิก
+                </ion-button>
+            </div>
+        </form>
+    </div>
+</ion-content>

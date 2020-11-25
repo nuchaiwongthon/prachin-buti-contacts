@@ -1,0 +1,29 @@
+<ion-content padding class="login auth-page">
+    <div class="auth-content">
+        <!-- Logo -->
+        <div padding-horizontal text-center>
+            <div class="logo"></div>
+            <h5 no-margin>
+                <ion-text color="light" class="fw500">
+                    <ion-text>ลงทะเบียนใช้งาน</ion-text>
+                </ion-text>
+            </h5>
+        </div>
+
+        <div style="margin-top: 20px;" class="card-background-page">
+                <ion-card (click)="goToCustomerRegister()">
+                <img src="../../../assets/img/transparent_bg.png"/>
+                <div class="card-title">ลงทะเบียน</div>
+                <div class="card-subtitle">สำหรับผู้ใช้งานทั่วไป</div>
+            </ion-card>
+
+            <ion-card (click)="goToOfficerRegister()">
+                <img src="../../../assets/img/transparent_bg.png"/>
+                <div class="card-title">ลงทะเบียน</div>
+                <div class="card-subtitle">สำหรับส่วนราชการ</div>
+            </ion-card>
+        </div>
+
+        <ion-button expand="full" class="back-button" shape="round" (click)="goToHome()">กลับ</ion-button>
+    </div>
+</ion-content>

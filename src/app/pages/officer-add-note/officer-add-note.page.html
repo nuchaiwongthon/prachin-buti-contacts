@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button size="small" shape="round" color="medium" (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="light" class="text1">{{titleName}}</ion-text>
+      </ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding-top="12px">
+    <form [formGroup]="onAddNoteForm" class="list-form">
+
+      <ion-item no-padding no-margin class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="ribbon" item-start></ion-icon>
+          หัวข้อ
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="title" [(ngModel)]="title"></ion-input>
+      </ion-item>
+      <p ion-text class="text08"
+         *ngIf="onAddNoteForm.get('title').touched && onAddNoteForm.get('title').hasError('required')">
+        <ion-text color="warning">
+          กรุณากรอกหัวข้อ
+        </ion-text>
+      </p>
+
+      <ion-item no-padding no-margin class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="person" item-start></ion-icon>
+          รายละเอียด
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="detail" [(ngModel)]="detail"></ion-input>
+      </ion-item>
+      <p ion-text class="text08"
+         *ngIf="onAddNoteForm.get('detail').touched && onAddNoteForm.get('detail').hasError('required')">
+        <ion-text color="warning">
+          กรุณากรอกรายละเอียด
+        </ion-text>
+      </p>
+
+      <ion-item no-padding no-margin class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="call" item-start></ion-icon>
+          หมายเลขโทรศัพท์
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="tel" [(ngModel)]="tel"></ion-input>
+      </ion-item>
+      <p ion-text class="text08"
+         *ngIf="onAddNoteForm.get('tel').touched && onAddNoteForm.get('tel').hasError('required')">
+        <ion-text color="warning">
+          กรุณากรอกหมายเลขโทรศัพท์
+        </ion-text>
+      </p>
+
+      <div style="margin-top: 20px;">
+        <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="addNote()"
+                    [disabled]="!onAddNoteForm.valid" tappable>
+          <ion-icon name="checkmark"></ion-icon>
+          บันทึก
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

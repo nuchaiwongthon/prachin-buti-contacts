@@ -1,0 +1,137 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button size="small" shape="round" color="medium" (click)="back()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            <ion-text color="light">
+                <ion-text color="light" class="text1">{{titleName}}</ion-text>
+                <!--        <ion-text color="light" class="fw700">คำขออนุมัติขอเป็นสมาชิกราชการ</ion-text>-->
+            </ion-text>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <div padding-top="12px">
+        <form [formGroup]="onAddPositionForm" class="list-form">
+            <ion-item>
+                <ion-label>เลือกกระทรวง</ion-label>
+                <ion-select placeholder="เลือกกระทรวง" formControlName="ministry" [(ngModel)]="ministry">
+                    <ion-select-option *ngFor="let data of ministryList" value="{{data.name}}">{{data.name}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="ribbon" item-start></ion-icon>
+                    ระบุตำแหน่งงาน
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="position" [(ngModel)]="position"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('position').touched && onAddPositionForm.get('position').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกตำแหน่งงาน
+                </ion-text>
+            </p>
+
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="person" item-start></ion-icon>
+                    ชื่อ-นามสกุล
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="name" [(ngModel)]="name"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('name').touched && onAddPositionForm.get('name').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกชื่อ-นามสกุล
+                </ion-text>
+            </p>
+
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="call" item-start></ion-icon>
+                    หมายเลขโทรศัพท์มือถือ
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="tel" [(ngModel)]="tel"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('tel').touched && onAddPositionForm.get('tel').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกหมายเลขโทรศัพท์มือถือ
+                </ion-text>
+            </p>
+
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="print" item-start></ion-icon>
+                    หมายเลขโทรศัพท์สำนักงาน
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="fax" [(ngModel)]="fax"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('fax').touched && onAddPositionForm.get('fax').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกหมายเลขโทรศัพท์สำนักงาน
+                </ion-text>
+            </p>
+
+            <ion-item no-padding no-margin class="animated fadeInUp">
+                <ion-text color="dark" class="ion-margin-top">แผนที่ตั้ง</ion-text>
+            </ion-item>
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="pin" item-start></ion-icon>
+                    รายละเอียดที่อยู่
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="address" [(ngModel)]="address"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('lat').touched && onAddPositionForm.get('address').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกรายละเอียดที่อยู่
+                </ion-text>
+            </p>
+
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="pin" item-start></ion-icon>
+                    ละติจูด
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="lat" [(ngModel)]="lat"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('lat').touched && onAddPositionForm.get('lat').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกละติจูด
+                </ion-text>
+            </p>
+
+            <ion-item no-padding class="animated fadeInUp">
+                <ion-label position="floating">
+                    <ion-icon name="pin" item-start></ion-icon>
+                    ลองจิจูด
+                </ion-label>
+                <ion-input color="secondary" type="text" formControlName="lng" [(ngModel)]="lng"></ion-input>
+            </ion-item>
+            <p ion-text class="text08"
+               *ngIf="onAddPositionForm.get('lng').touched && onAddPositionForm.get('lng').hasError('required')">
+                <ion-text color="warning">
+                    กรุณากรอกลองจิจูด
+                </ion-text>
+            </p>
+
+            <div style="margin-top: 20px;">
+                <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="addPosition()"
+                            [disabled]="!onAddPositionForm.valid" tappable>
+                    <ion-icon name="checkmark"></ion-icon>
+                    บันทึก
+                </ion-button>
+            </div>
+        </form>
+    </div>
+</ion-content>

@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button color="secondary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <ion-text color="light">
+                <ion-text color="light" class="text1">จัดการตำแหน่งงาน</ion-text>
+                <!--        <ion-text color="light" class="fw700">คำขออนุมัติขอเป็นสมาชิกราชการ</ion-text>-->
+            </ion-text>
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button size="small" shape="round" color="medium" (click)="goToAddPosition()">
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        <ion-input type="text" placeholder="ค้นหาจากชื่อ" [(ngModel)]="searchName"
+                   (ionChange)="searchWithName()"></ion-input>
+        <button size="large" item-right>
+            <ion-icon name="search"></ion-icon>
+        </button>
+    </ion-item>
+    <ion-item>
+        <ion-input type="text" placeholder="ค้นหาจากกระทรวง" [(ngModel)]="searchMinistry"
+                   (ionChange)="searchWithMinistry()"></ion-input>
+        <button size="large" item-right>
+            <ion-icon name="search"></ion-icon>
+        </button>
+    </ion-item>
+    <ion-list>
+        <ion-item-sliding *ngFor="let info of officer">
+            <ion-item detail lines="full">
+                <ion-label class="ion-text-wrap">
+                    <p style="color: #000000">{{info.name}}</p>
+                    <ion-text color="secondary">
+                        <p>{{info.ministry}}</p>
+                    </ion-text>
+                </ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option color="primary" (click)="edit(info)">
+                    <ion-icon name="create"></ion-icon>
+                </ion-item-option>
+                <ion-item-option color="danger" (click)="delete(info.uid)">
+                    <ion-icon name="trash"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>

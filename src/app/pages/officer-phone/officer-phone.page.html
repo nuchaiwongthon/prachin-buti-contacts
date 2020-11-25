@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="light" class="text1">ค้นหาจากหมายเลขโทรศัพท์มือถือ/สำนักงาน</ion-text>
+      </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="showNotification()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end" *ngIf="notificationCount > 0">{{notificationCount}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item no-padding class="animated fadeInUp">
+    <ion-label>
+      <div style="width: 100%">
+        <input type="text" placeholder="ค้นหาจากหมายเลขโทรศัพท์มือถือ" style="width: 100%;" [(ngModel)]="searchTel"
+               (change)="eventSearchTel($event)">
+      </div>
+      <div style="width: 100%; margin-top: 4px;">
+        <input type="text" placeholder="ค้นหาจากหมายเลขโทรศัพท์สำนักงาน" style="width: 100%;" [(ngModel)]="searchFax"
+               (change)="eventSearchFax($event)">
+      </div>
+    </ion-label>
+  </ion-item>
+  <ion-card *ngFor="let officer of officerList" no-padding no-margin style="margin-top: 8px; margin-bottom: 4px;">
+    <ion-item>
+      <ion-label>
+        <h5>{{officer.ministry}}</h5>
+        <p>{{officer.position}} {{officer.name}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-card-content>
+      <p>หมายเลขโทรศัพท์มือถือ {{officer.tel}}</p>
+      <p>หมายเลขโทรศัพท์สำนักงาน {{officer.fax}}</p>
+      <p>รายละเอียดที่อยู่: {{officer.address}}</p>
+    </ion-card-content>
+    <ion-footer>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" color="light" (click)="actionFavorite(officer)">
+            <ion-icon slot="icon-only" name="star" style="color: #d83636"
+                      *ngIf="officer.favorite"></ion-icon>
+            <ion-icon slot="icon-only" name="star" *ngIf="!officer.favorite"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="light" (click)="actionMap(officer.lat, officer.lng)">
+            <ion-icon slot="icon-only" name="pin"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="light" (click)="actionCall(officer.tel)">
+            <ion-icon slot="icon-only" name="call"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-footer>
+  </ion-card>
+</ion-content>
