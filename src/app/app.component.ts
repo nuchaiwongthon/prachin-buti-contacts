@@ -32,114 +32,114 @@ export class AppComponent {
     ) {
         this.initializeApp();
 
-        firebase.auth().onAuthStateChanged(user => {
-            if (user !== null) {
-                if (user.email === 'admin@gmail.com') {
-                    this.position = 9;
-                    this.name = 'Admin';
-                    this.email = user.email;
-                    this.appPages = [
-                        {
-                            title: 'คำขออนุมัติขอเป็นสมาชิกราชการ',
-                            url: '/admin-check-user',
-                            direct: 'root',
-                            icon: 'people'
-                        },
-                        {
-                            title: 'คำขออนุมัติแก้ไขข้อมูลสมาชิก',
-                            url: '/admin-check-edit',
-                            direct: 'forward',
-                            icon: 'checkmark'
-                        },
+        // firebase.auth().onAuthStateChanged(user => {
+        //     if (user !== null) {
+        //         if (user.email === 'admin@gmail.com') {
+        //             this.position = 9;
+        //             this.name = 'Admin';
+        //             this.email = user.email;
+        //             this.appPages = [
+        //                 {
+        //                     title: 'คำขออนุมัติขอเป็นสมาชิกราชการ',
+        //                     url: '/admin-check-user',
+        //                     direct: 'root',
+        //                     icon: 'people'
+        //                 },
+        //                 {
+        //                     title: 'คำขออนุมัติแก้ไขข้อมูลสมาชิก',
+        //                     url: '/admin-check-edit',
+        //                     direct: 'forward',
+        //                     icon: 'checkmark'
+        //                 },
 
-                        {
-                            title: 'จัดการข้อมูลกระทรวง',
-                            url: '/admin-ministry',
-                            direct: 'forward',
-                            icon: 'cog'
-                        },
+        //                 {
+        //                     title: 'จัดการข้อมูลกระทรวง',
+        //                     url: '/admin-ministry',
+        //                     direct: 'forward',
+        //                     icon: 'cog'
+        //                 },
 
-                        {
-                            title: 'จัดการตำแหน่งงาน',
-                            url: '/admin-position',
-                            direct: 'forward',
-                            icon: 'cog'
-                        },
-                    ];
-                } else {
-                    firebase.database().ref('user/' + user.uid).on('value', snapshot => {
-                        const userData = snapshot.val();
-                        if (userData.position === 0) {
-                            this.position = 0;
-                            this.name = userData.name;
-                            this.email = userData.email;
-                            this.appPages = [
-                                {
-                                    title: 'ค้นหาชื่อกระทรวง/สังกัด',
-                                    url: '/officer-ministry',
-                                    direct: 'root',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'ค้นหารายชื่อ/ตำแหน่ง',
-                                    url: '/officer-position',
-                                    direct: 'forward',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'ค้นหาจากหมายเลขโทรศัพท์มือถือ/สำนักงาน',
-                                    url: '/officer-phone',
-                                    direct: 'forward',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'รายการโปรด',
-                                    url: '/officer-favorite',
-                                    direct: 'forward',
-                                    icon: 'heart'
-                                }
-                            ];
-                        } else {
-                            this.position = 1;
-                            this.name = userData.name;
-                            this.email = userData.email;
-                            this.appPages = [
-                                {
-                                    title: 'ค้นหาชื่อกระทรวง/สังกัด',
-                                    url: '/officer-ministry',
-                                    direct: 'root',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'ค้นหารายชื่อ/ตำแหน่ง',
-                                    url: '/officer-position',
-                                    direct: 'forward',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'ค้นหาจากหมายเลขโทรศัพท์มือถือ/สำนักงาน',
-                                    url: '/officer-phone',
-                                    direct: 'forward',
-                                    icon: 'search'
-                                },
-                                {
-                                    title: 'บันทึกความทรงจำ',
-                                    url: '/officer-note',
-                                    direct: 'forward',
-                                    icon: 'paper'
-                                },
-                                {
-                                    title: 'รายการโปรด',
-                                    url: '/officer-favorite',
-                                    direct: 'forward',
-                                    icon: 'heart'
-                                }
-                            ];
-                        }
-                    });
-                }
-            }
-        });
+        //                 {
+        //                     title: 'จัดการตำแหน่งงาน',
+        //                     url: '/admin-position',
+        //                     direct: 'forward',
+        //                     icon: 'cog'
+        //                 },
+        //             ];
+        //         } else {
+        //             firebase.database().ref('user/' + user.uid).on('value', snapshot => {
+        //                 const userData = snapshot.val();
+        //                 if (userData.position === 0) {
+        //                     this.position = 0;
+        //                     this.name = userData.name;
+        //                     this.email = userData.email;
+        //                     this.appPages = [
+        //                         {
+        //                             title: 'ค้นหาชื่อกระทรวง/สังกัด',
+        //                             url: '/officer-ministry',
+        //                             direct: 'root',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'ค้นหารายชื่อ/ตำแหน่ง',
+        //                             url: '/officer-position',
+        //                             direct: 'forward',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'ค้นหาจากหมายเลขโทรศัพท์มือถือ/สำนักงาน',
+        //                             url: '/officer-phone',
+        //                             direct: 'forward',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'รายการโปรด',
+        //                             url: '/officer-favorite',
+        //                             direct: 'forward',
+        //                             icon: 'heart'
+        //                         }
+        //                     ];
+        //                 } else {
+        //                     this.position = 1;
+        //                     this.name = userData.name;
+        //                     this.email = userData.email;
+        //                     this.appPages = [
+        //                         {
+        //                             title: 'ค้นหาชื่อกระทรวง/สังกัด',
+        //                             url: '/officer-ministry',
+        //                             direct: 'root',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'ค้นหารายชื่อ/ตำแหน่ง',
+        //                             url: '/officer-position',
+        //                             direct: 'forward',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'ค้นหาจากหมายเลขโทรศัพท์มือถือ/สำนักงาน',
+        //                             url: '/officer-phone',
+        //                             direct: 'forward',
+        //                             icon: 'search'
+        //                         },
+        //                         {
+        //                             title: 'บันทึกความทรงจำ',
+        //                             url: '/officer-note',
+        //                             direct: 'forward',
+        //                             icon: 'paper'
+        //                         },
+        //                         {
+        //                             title: 'รายการโปรด',
+        //                             url: '/officer-favorite',
+        //                             direct: 'forward',
+        //                             icon: 'heart'
+        //                         }
+        //                     ];
+        //                 }
+        //             });
+        //         }
+        //     }
+        // });
         // const user = firebase.auth().currentUser;
 
     }
