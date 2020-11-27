@@ -16,14 +16,7 @@ export class LoginPage implements OnInit {
   email: any;
   password: any;
 
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public toastCtrl: ToastController,
-    public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder
-  ) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private formBuilder: FormBuilder) {
     // this.user = firebase.auth().currentUser;
     // if (this.user !== null) {
     //     const email = this.user.email;
@@ -131,13 +124,13 @@ export class LoginPage implements OnInit {
           if (email === 'admin@gmail.com') {
             this.navCtrl.navigateRoot('/admin-check-user');
           } else {
-            const playersRef = firebase.database().ref('user/');
+            const ref = firebase.database().ref('user/');
             firebase.database();
-            playersRef
+            ref
               .orderByChild('email')
               .equalTo(email)
               .on('child_added', (data) => {
-                localStorage.setItem('user', data.val().id);
+                localStorage.setItem('user', data.key);
                 console.log('Start at filter: ' + data.val().email);
                 if (data.val().email && data.val().password === this.password) {
                   if (data.val().verify === 0) {

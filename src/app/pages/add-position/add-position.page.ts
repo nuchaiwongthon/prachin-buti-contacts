@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController, NavController } from '@ionic/angular';
+import { LoadingController, MenuController, NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'Firebase';
@@ -21,7 +21,7 @@ export class AddPositionPage implements OnInit {
   titleName = 'เพิ่มข้อมูลตำแหน่งงาน';
   isUpdate = false;
   ministry_name: string;
-  ministry: string;
+  id_ministry: string;
   position: string;
   name: string;
   tel_p: string;
@@ -31,17 +31,11 @@ export class AddPositionPage implements OnInit {
   lng: string;
   tel_all = [];
   tel_all_show: string = '';
-  dataRun: any = 0;
+  number_position_run: any = 0;
   number_tel_run: any = 0;
+  number_inc_run: any = 0;
 
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public loadingCtrl: LoadingController, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public toastCtrl: ToastController) {
     this.ref.on('value', (resp) => {
       this.ministryList = [];
       this.ministryList = snapshotToArray(resp);
@@ -58,7 +52,8 @@ export class AddPositionPage implements OnInit {
         this.lng = this.officer.lng;
         this.isUpdate = true;
         this.titleName = 'แก้ไขข้อมูลตำแหน่งงาน';
-        this.ministry = this.officer.id;
+        this.tel_all_show = this.officer.tel_all;
+        this.id_ministry = this.officer.id_ministry;
       }
     });
   }
@@ -72,7 +67,7 @@ export class AddPositionPage implements OnInit {
       address: [null, Validators.compose([Validators.required])],
       lat: [null, Validators.compose([Validators.required])],
       lng: [null, Validators.compose([Validators.required])],
-      ministry: [null, Validators.compose([Validators.required])],
+      id_ministry: [null, Validators.compose([Validators.required])],
       tel_all: [null, Validators.compose([Validators.required])],
     });
   }
@@ -83,36 +78,13 @@ export class AddPositionPage implements OnInit {
     this.tel_p = '';
   }
   async addPosition() {
-    await firebase
-      .database()
-      .ref(`officer/`)
-      .limitToLast(1)
-      .on(`value`, (resp) => {
-        resp.forEach((snapshot) => {
-          let item = snapshot.key;
-          this.dataRun = Number(item.replace('P', ''));
-        });
-      });
-    await firebase
-      .database()
-      .ref(`tel/`)
-      .limitToLast(1)
-      .on(`value`, (resp) => {
-        resp.forEach((snapshot) => {
-          let item = snapshot.key;
-          this.number_tel_run = Number(item.replace('T', ''));
-        });
-      });
     if (this.isUpdate) {
-      firebase
+      await firebase
         .database()
-        .ref('officer/' + this.officer.id)
+        .ref('officer/' + this.officer.id_position)
         .update(this.onAddPositionForm.value);
       this.navCtrl.navigateBack('/admin-position');
     } else {
-      delete this.onAddPositionForm.value.tel;
-      this.onAddPositionForm.value.ministry_name = this.ministry_name;
-      this.refPosition.child(`P0000${Number(this.dataRun) + 1}`).set(this.onAddPositionForm.value);
       let tels = this.tel_all_show.split(',');
       let data_set = [];
       for (let index = 0; index < tels.length; index++) {
@@ -120,15 +92,37 @@ export class AddPositionPage implements OnInit {
           data_set.push(tels[index]);
         }
       }
-      firebase
-        .database()
-        .ref('tel/')
-        .child(`T0000${Number(this.number_tel_run) + 1}`)
-        .set({
-          id_position: `P0000${Number(this.dataRun) + 1}`,
-          tel: data_set,
-        });
-      this.navCtrl.navigateBack('/admin-position');
+      if (data_set.length) {
+        this.number_position_run = await this.getLastRecordPosition();
+        this.number_tel_run = await this.getLastRecordTel();
+        this.number_inc_run = await this.getLastRecordIncumbent();
+        delete this.onAddPositionForm.value.tel;
+        delete this.onAddPositionForm.value.tel_all;
+        delete this.onAddPositionForm.value.fax;
+        delete this.onAddPositionForm.value.position;
+        this.onAddPositionForm.value.ministry_name = this.ministry_name;
+        this.refPosition.child(`P0000${Number(this.number_position_run) + 1}`).set(this.onAddPositionForm.value);
+        firebase
+          .database()
+          .ref(`incumbent/`)
+          .child(`I0000${Number(this.number_inc_run) + 1}`)
+          .set({
+            name_inc: this.position,
+            id_position: `P0000${Number(this.number_position_run)}`,
+          });
+        firebase
+          .database()
+          .ref(`tel/`)
+          .child(`T0000${Number(this.number_tel_run) + 1}`)
+          .set({
+            id_position: `P0000${Number(this.number_position_run)}`,
+            tel: data_set,
+            fax: this.fax,
+          });
+        this.navCtrl.navigateBack('/admin-position');
+      } else {
+        this.showToast('ยังไม่ได้เพิ่มเบอร์โทร');
+      }
     }
   }
   back() {
@@ -136,11 +130,64 @@ export class AddPositionPage implements OnInit {
   }
   selectMinistry(item, e) {
     for (let index = 0; index < item.length; index++) {
-      let find = item.findIndex((x) => x.id === this.ministry);
+      let find = item.findIndex((x) => x.id === this.id_ministry);
 
       if (find !== -1) {
         this.ministry_name = item[find].name_min;
       }
     }
+  }
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+    });
+    toast.present();
+  }
+  getLastRecordPosition() {
+    return new Promise(async (resolve, reject) => {
+      await firebase
+        .database()
+        .ref(`officer/`)
+        .limitToLast(1)
+        .on(`value`, (resp) => {
+          resp.forEach((snapshot) => {
+            console.log(snapshot);
+            let item = snapshot.key;
+            this.number_position_run = Number(item.replace('P', ''));
+          });
+          resolve(this.number_position_run);
+        });
+    });
+  }
+  getLastRecordTel() {
+    return new Promise(async (resolve, reject) => {
+      await firebase
+        .database()
+        .ref(`tel/`)
+        .limitToLast(1)
+        .on(`value`, (resp) => {
+          resp.forEach((snapshot) => {
+            let item = snapshot.key;
+            this.number_tel_run = Number(item.replace('T', ''));
+          });
+          resolve(this.number_tel_run);
+        });
+    });
+  }
+  getLastRecordIncumbent() {
+    return new Promise(async (resolve, reject) => {
+      await firebase
+        .database()
+        .ref(`incumbent/`)
+        .limitToLast(1)
+        .on(`value`, (resp) => {
+          resp.forEach((snapshot) => {
+            let item = snapshot.key;
+            this.number_inc_run = Number(item.replace('I', ''));
+          });
+          resolve(this.number_inc_run);
+        });
+    });
   }
 }

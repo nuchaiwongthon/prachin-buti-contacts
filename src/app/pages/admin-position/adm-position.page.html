@@ -36,9 +36,12 @@
         <ion-item-sliding *ngFor="let info of officer">
             <ion-item detail lines="full">
                 <ion-label class="ion-text-wrap">
-                    <p style="color: #000000">{{info.name}}</p>
+                    <p style="color: #000000">ชื่อ : {{info.name}}</p>
                     <ion-text color="secondary">
-                        <p>{{info.ministry}}</p>
+                        <p>กระทรวง : {{info.ministry_name}}</p>
+                    </ion-text>
+                    <ion-text color="secondary">
+                        <p>ตำแหน่ง : {{info.name_inc}}</p>
                     </ion-text>
                 </ion-label>
             </ion-item>

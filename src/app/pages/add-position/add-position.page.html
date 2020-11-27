@@ -19,7 +19,7 @@
     <form [formGroup]="onAddPositionForm" class="list-form">
       <ion-item>
         <ion-label>เลือกกระทรวง</ion-label>
-        <ion-select placeholder="เลือกกระทรวง" formControlName="ministry" [(ngModel)]="ministry" (ionChange)="selectMinistry(ministryList, $event)">
+        <ion-select placeholder="เลือกกระทรวง" formControlName="id_ministry" [(ngModel)]="id_ministry" (ionChange)="selectMinistry(ministryList, $event)">
           <ion-select-option *ngFor="let data of ministryList" value="{{data.id}}">{{data.name_min}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -64,7 +64,7 @@
       <p ion-text class="text08" *ngIf="onAddPositionForm.get('tel').touched && onAddPositionForm.get('tel').hasError('required')">
         <ion-text color="warning"> กรุณากรอกหมายเลขโทรศัพท์มือถือ </ion-text>
       </p>
-      <ion-textarea formControlName="tel_all" [(ngModel)]="tel_all_show" readonly></ion-textarea>
+      <ion-textarea formControlName="tel_all" [(ngModel)]="tel_all_show"></ion-textarea>
       <ion-item no-padding no-margin class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="print" item-start></ion-icon>
@@ -95,7 +95,7 @@
           <ion-icon name="pin" item-start></ion-icon>
           ละติจูด
         </ion-label>
-        <ion-input color="secondary" type="number" formControlName="lat" [(ngModel)]="lat"></ion-input>
+        <ion-input color="secondary" type="text" formControlName="lat" [(ngModel)]="lat"></ion-input>
       </ion-item>
       <p ion-text class="text08" *ngIf="onAddPositionForm.get('lat').touched && onAddPositionForm.get('lat').hasError('required')">
         <ion-text color="warning"> กรุณากรอกละติจูด </ion-text>
@@ -106,7 +106,7 @@
           <ion-icon name="pin" item-start></ion-icon>
           ลองติจูด
         </ion-label>
-        <ion-input color="secondary" type="number" formControlName="lng" [(ngModel)]="lng"></ion-input>
+        <ion-input color="secondary" type="text" formControlName="lng" [(ngModel)]="lng"></ion-input>
       </ion-item>
       <p ion-text class="text08" *ngIf="onAddPositionForm.get('lng').touched && onAddPositionForm.get('lng').hasError('required')">
         <ion-text color="warning"> กรุณากรอกลองติจูด </ion-text>
