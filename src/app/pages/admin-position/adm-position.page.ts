@@ -17,7 +17,7 @@ export class AdmPositionPage implements OnInit {
   searchMinistry = '';
 
   officer = [];
-  ref = firebase.database().ref('officer/');
+  ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
@@ -114,7 +114,7 @@ export class AdmPositionPage implements OnInit {
       await firebase.database().ref('tel/').child(iterator).remove();
     }
     await firebase.database().ref('incumbent/').child(data.id_inc).remove();
-    await firebase.database().ref('officer/').child(data.id_position).remove();
+    await firebase.database().ref('position/').child(data.id_position).remove();
     this.getAllPosition('', '');
   }
   setDataTel() {

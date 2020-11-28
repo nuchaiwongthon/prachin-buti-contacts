@@ -23,7 +23,7 @@ export class OfficerPositionPage implements OnInit {
 
   user: any;
 
-  ref = firebase.database().ref('officer/');
+  ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
@@ -31,7 +31,7 @@ export class OfficerPositionPage implements OnInit {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
-      .ref('officer/')
+      .ref('position/')
       .on('child_added', (data) => {
         this.notificationCount++;
         this.notificationList.push(data.val());
@@ -108,7 +108,7 @@ export class OfficerPositionPage implements OnInit {
   //       });
   //       firebase
   //         .database()
-  //         .ref('officer/')
+  //         .ref('position/')
   //         .on('value', (snapshot) => {
   //           this.officerList = [];
   //           snapshot.forEach((snapshotData) => {

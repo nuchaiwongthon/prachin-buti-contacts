@@ -23,7 +23,7 @@ export class OfficerFavoritePage implements OnInit {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
-      .ref('officer/')
+      .ref('position/')
       .once('value', (data) => {
         data.forEach((snapshot) => {
           this.notificationCount++;
@@ -151,7 +151,7 @@ export class OfficerFavoritePage implements OnInit {
       let data_set = [];
       firebase
         .database()
-        .ref(`officer/`)
+        .ref(`position/`)
         .on('value', (data) => {
           data.forEach((dataSnapshot) => {
             const item = dataSnapshot.val();

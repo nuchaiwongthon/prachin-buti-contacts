@@ -23,7 +23,7 @@ export class OfficerPhonePage implements OnInit {
 
   user: any;
 
-  ref = firebase.database().ref('officer/');
+  ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
@@ -31,7 +31,7 @@ export class OfficerPhonePage implements OnInit {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
-      .ref('officer/')
+      .ref('position/')
       .on('child_added', (data) => {
         this.notificationCount++;
         this.notificationList.push(data.val());

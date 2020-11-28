@@ -24,14 +24,14 @@ export class OfficerMinistryPage implements OnInit {
 
   user: any;
 
-  ref = firebase.database().ref('officer/');
+  ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber, private launchNavigator: LaunchNavigator) {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
-      .ref('officer/')
+      .ref('position/')
       .once('value', (data) => {
         data.forEach((snapshot) => {
           this.notificationCount++;
@@ -190,7 +190,7 @@ export class OfficerMinistryPage implements OnInit {
       let data_set = [];
       firebase
         .database()
-        .ref(`officer/`)
+        .ref(`position/`)
         .orderByChild(`id_ministry`)
         .equalTo(search)
         .on('value', (data) => {

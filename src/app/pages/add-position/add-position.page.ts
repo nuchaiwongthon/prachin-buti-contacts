@@ -14,7 +14,7 @@ import { async } from '@angular/core/testing';
 export class AddPositionPage implements OnInit {
   ministryList = [];
   ref = firebase.database().ref('ministry/');
-  refPosition = firebase.database().ref('officer/');
+  refPosition = firebase.database().ref('position/');
 
   public onAddPositionForm: FormGroup;
 
@@ -151,7 +151,7 @@ export class AddPositionPage implements OnInit {
         this.onAddPositionForm.value.ministry_name = this.ministry_name;
         await firebase
           .database()
-          .ref('officer/' + this.officer.id_position)
+          .ref('position/' + this.officer.id_position)
           .update({
             address: this.onAddPositionForm.value.address,
             id_ministry: this.onAddPositionForm.value.id_ministry,
@@ -240,7 +240,7 @@ export class AddPositionPage implements OnInit {
       let dataSet = [];
       await firebase
         .database()
-        .ref(`officer/`)
+        .ref(`position/`)
         .on(`value`, (resp) => {
           resp.forEach((snapshot) => {
             let item = snapshot.key;

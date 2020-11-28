@@ -54,7 +54,7 @@ export class OfficerAddNotePage implements OnInit {
         .update({
           title: this.onAddNoteForm.value.title,
           detail: this.onAddNoteForm.value.detail,
-          tel: this.onAddNoteForm.value.tel,
+          phone: this.onAddNoteForm.value.tel,
         });
       this.navCtrl.navigateBack('/officer-note');
     } else {
@@ -67,7 +67,7 @@ export class OfficerAddNotePage implements OnInit {
           title: this.onAddNoteForm.value.title,
           id_user: localStorage.getItem('user'),
           detail: this.onAddNoteForm.value.detail,
-          tel: this.onAddNoteForm.value.tel,
+          phone: this.onAddNoteForm.value.tel,
         });
       this.navCtrl.navigateBack('/officer-note');
     }
