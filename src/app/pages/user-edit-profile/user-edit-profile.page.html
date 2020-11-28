@@ -22,11 +22,8 @@
       </ion-label>
       <ion-input color="secondary" type="text" formControlName="fullName" [(ngModel)]="fullname"></ion-input>
     </ion-item>
-    <p ion-text class="text08"
-       *ngIf="onRegisterForm.get('fullName').touched && onRegisterForm.get('fullName').hasError('required')">
-      <ion-text color="warning">
-        กรุณากรอกชื่อ-นามสกุล
-      </ion-text>
+    <p ion-text class="text08" *ngIf="onRegisterForm.get('fullName').touched && onRegisterForm.get('fullName').hasError('required')">
+      <ion-text color="warning"> กรุณากรอกชื่อ-นามสกุล </ion-text>
     </p>
 
     <ion-item no-padding class="animated fadeInUp">
@@ -36,11 +33,8 @@
       </ion-label>
       <ion-input color="secondary" type="text" formControlName="address" [(ngModel)]="address"></ion-input>
     </ion-item>
-    <p ion-text class="text08"
-       *ngIf="onRegisterForm.get('address').touched && onRegisterForm.get('address').hasError('required')">
-      <ion-text color="warning">
-        กรุณากรอกที่อยู่
-      </ion-text>
+    <p ion-text class="text08" *ngIf="onRegisterForm.get('address').touched && onRegisterForm.get('address').hasError('required')">
+      <ion-text color="warning"> กรุณากรอกที่อยู่ </ion-text>
     </p>
 
     <ion-text class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
@@ -71,14 +65,13 @@
     <ion-item no-padding class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="lock" item-start></ion-icon>
-        Re-Password
+        Confirm Password
       </ion-label>
       <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>
     </ion-item>
 
-    <div style="margin-top: 20px;">
-      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="updateProfile()"
-                  [disabled]="!onRegisterForm.valid" tappable>
+    <div style="margin-top: 20px">
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="updateProfile()" [disabled]="!onRegisterForm.valid" tappable>
         <ion-icon name="checkmark"></ion-icon>
         แก้ไขข้อมูล
       </ion-button>

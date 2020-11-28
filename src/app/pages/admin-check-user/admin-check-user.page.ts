@@ -11,14 +11,7 @@ export class AdminCheckUserPage implements OnInit {
   users = [];
   ref = firebase.database().ref('user/');
 
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public popoverCtrl: PopoverController,
-    public alertCtrl: AlertController,
-    public modalCtrl: ModalController,
-    public toastCtrl: ToastController
-  ) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController) {
     this.getUsers();
   }
 
@@ -28,15 +21,13 @@ export class AdminCheckUserPage implements OnInit {
       .equalTo(0)
       .on('child_added', (resp) => {
         this.users = [];
-        console.log(resp.key, resp.val());
-
         if (resp.val().id_type === 'UT00002') {
           this.users.push({
             id: resp.key,
             address: resp.val().address,
             email: resp.val().email,
             id_type: resp.val().id_type,
-            name: resp.val().name,
+            name_user: resp.val().name_user,
             password: resp.val().password,
             uid: resp.val().uid,
             verify: resp.val().verify,
@@ -51,19 +42,19 @@ export class AdminCheckUserPage implements OnInit {
   async view(user: any) {
     const userData = [];
 
-    const name = 'ชื่อ: ' + user.name;
+    const name = 'ชื่อ : ' + user.name_user;
     userData.push({
       value: name,
       disabled: true,
     });
 
-    const address = 'ที่อยู่: ' + user.address;
+    const address = 'ที่อยู่ : ' + user.address;
     userData.push({
       value: address,
       disabled: true,
     });
 
-    const email = 'อีเมล: ' + user.email;
+    const email = 'อีเมล : ' + user.email;
     userData.push({
       value: email,
       disabled: true,
@@ -87,26 +78,26 @@ export class AdminCheckUserPage implements OnInit {
     alert.present();
   }
 
-  async accept(uid: string) {
+  async accept(id_user: string) {
     const verify = {
       verify: 1,
     };
     firebase
       .database()
-      .ref('user/' + uid)
+      .ref('user/' + id_user)
       .update(verify)
       .then((value) => {
         this.getUsers();
       });
   }
 
-  async denied(uid: string) {
+  async denied(id_user: string) {
     const verify = {
       verify: 2,
     };
     firebase
       .database()
-      .ref('user/' + uid)
+      .ref('user/' + id_user)
       .update(verify)
       .then((value) => {
         this.getUsers();

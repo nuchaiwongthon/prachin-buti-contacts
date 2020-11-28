@@ -20,14 +20,7 @@ export class AddMinistryPage implements OnInit {
   isUpdate = false;
   titleName = 'เพิ่มข้อมูลกระทรวง';
   dataRun: any = 0;
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public loadingCtrl: LoadingController, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.ministry = this.router.getCurrentNavigation().extras.state.ministry;
@@ -46,15 +39,21 @@ export class AddMinistryPage implements OnInit {
   }
 
   async addMinistry() {
+    let dataSet = [];
     await firebase
       .database()
       .ref(`ministry/`)
-      .limitToLast(1)
       .on(`value`, (resp) => {
         resp.forEach((snapshot) => {
           let item = snapshot.key;
-          this.dataRun = Number(item.replace('M', ''));
+          dataSet.push(Number(item.replace('M', '')));
         });
+        let sort = dataSet.sort(function (a, b) {
+          return b - a;
+        });
+        console.log(sort);
+
+        this.dataRun = sort[0];
       });
     if (this.isUpdate) {
       firebase
@@ -63,7 +62,7 @@ export class AddMinistryPage implements OnInit {
         .update({ name_min: this.onAddMinisterForm.value.name });
       this.navCtrl.navigateBack('/admin-ministry');
     } else {
-      this.ref.child(`M0000${Number(this.dataRun) + 1}`).set({
+      this.ref.child(`M0000${Number(this.dataRun ? this.dataRun : 0) + 1}`).set({
         name_min: this.onAddMinisterForm.value.name,
       });
       this.navCtrl.navigateBack('/admin-ministry');

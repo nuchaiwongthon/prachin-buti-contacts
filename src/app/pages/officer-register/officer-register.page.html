@@ -13,7 +13,7 @@
       <div style="margin-top: 20px">
         <ion-text color="light">ลำดับ U-0000{{dataRun + 1}}</ion-text>
       </div>
-      <ion-item no-padding no-margin class="animated fadeInUp">
+      <ion-item no-padding no-margin class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="person" item-start></ion-icon>
           ชื่อ-นามสกุล
@@ -24,7 +24,7 @@
         <ion-text color="warning"> กรุณากรอกชื่อ-นามสกุล </ion-text>
       </p>
 
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="pin" item-start></ion-icon>
           ที่อยู่
@@ -36,7 +36,7 @@
       </p>
 
       <ion-text color="light" class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="mail" item-start></ion-icon>
           Username (ระบุ Email)
@@ -47,7 +47,7 @@
         <ion-text color="warning"> กรุณากรอกอีเมล </ion-text>
       </p>
 
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="lock" item-start></ion-icon>
           Password
@@ -58,10 +58,10 @@
         <ion-text color="warning"> กรุณากรอกรหัสผ่าน </ion-text>
       </p>
 
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="lock" item-start></ion-icon>
-          Re-Password
+          Confirm Password
         </ion-label>
         <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>
       </ion-item>
@@ -70,16 +70,7 @@
       </p>
 
       <div style="margin-top: 20px">
-        <ion-button
-          icon-left
-          size="medium"
-          expand="full"
-          shape="round"
-          color="dark"
-          (click)="doRegister()"
-          [disabled]="!onRegisterForm.valid"
-          tappable
-        >
+        <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="doRegister()" [disabled]="!onRegisterForm.valid" tappable>
           <ion-icon name="checkmark"></ion-icon>
           ลงทะเบียน
         </ion-button>

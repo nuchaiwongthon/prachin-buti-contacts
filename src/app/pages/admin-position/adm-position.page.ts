@@ -4,6 +4,8 @@ import { AlertController, LoadingController, MenuController, NavController } fro
 import * as firebase from 'Firebase';
 import { snapshotToArray } from '../admin-ministry/adm-ministry.page';
 import { NavigationExtras } from '@angular/router';
+import { SearchFilterPage } from './../modal/search-filter/search-filter.page';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-adm-position',
@@ -19,74 +21,59 @@ export class AdmPositionPage implements OnInit {
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
+
+  ionViewDidEnter() {
     this.getAllPosition('', '');
   }
-
-  getAllPosition(name: string, ministry: string) {
-    this.ref.on('value', (resp) => {
-      this.officer = [];
-      resp.forEach((data) => {
-        const item = data.val();
-        item.id_position = data.key;
-        if (item.name.includes(name) && item.ministry_name.includes(ministry)) {
-          this.officer.push(item);
-        }
-      });
-      for (let index = 0; index < this.officer.length; index++) {
-        // console.log(this.officer[index]);
-
-        this.ref_inc
-          .orderByChild('name_inc')
-          .equalTo(this.officer[index].id_position)
-          .on('child_added', (data) => {
-            // console.log(data.val());
-          });
-      }
-    });
-  }
-
-  async ngOnInit() {
+  async getAllPosition(name: string, ministry: string) {
     let position_arr = [];
+    this.officer = [];
     const position: any = await this.setDataPosition();
     const tel: any = await this.setDataTel();
     const inc: any = await this.setDataIncumbent();
-    for (let index = 0; index < position.length; index++) {
-      let find_index_tel = tel.findIndex((e) => e.id_position === position[index].id_position);
 
+    position_arr = position;
+    for (let index = 0; index < tel.length; index++) {
+      let find_index_tel = position.findIndex((e) => e.id_position === tel[index].id_position);
       if (find_index_tel !== -1) {
-        position_arr.push({
-          id_position: position[index].id_position,
-          address: position[index].address,
-          id_ministry: position[index].id_ministry,
-          lat: position[index].lat,
-          lng: position[index].lng,
-          ministry_name: position[index].ministry_name,
-          name: position[index].name,
-          tel: tel[find_index_tel].tel,
-          fax: tel[find_index_tel].fax,
+        if (tel[index].type_tel === 'tel') {
+          position_arr[find_index_tel].tel = tel[index].tel;
+        }
+        if (tel[index].type_tel === 'fax') {
+          position_arr[find_index_tel].fax = tel[index].tel;
+        }
+        let asd = tel.map((e) => {
+          if (e.id_position === position_arr[find_index_tel].id_position) {
+            return e.id_tel;
+          }
         });
+        position_arr[find_index_tel].tel_id = asd.filter((e) => e !== undefined);
       }
     }
+
     for (let index = 0; index < position_arr.length; index++) {
       let find_index_inc = inc.findIndex((e) => e.id_position === position_arr[index].id_position);
       if (find_index_inc !== -1) {
+        position_arr[index].id_inc = inc[find_index_inc].id_inc;
         position_arr[index].name_inc = inc[find_index_inc].name_inc;
       }
     }
-    this.officer = position_arr;
+    for (let index = 0; index < position_arr.length; index++) {
+      if (position_arr[index].name_po.includes(name) && position_arr[index].ministry_name.includes(ministry)) {
+        this.officer.push(position_arr[index]);
+      }
+    }
   }
+
+  async ngOnInit() {}
 
   goToAddPosition() {
     this.navCtrl.navigateForward('/add-position');
   }
 
-  searchWithName() {
-    this.getAllPosition(this.searchName, '');
-  }
-
-  searchWithMinistry() {
-    this.getAllPosition('', this.searchMinistry);
+  search(name: string, ministry: string) {
+    this.getAllPosition(name, ministry);
   }
 
   edit(position: any) {
@@ -98,7 +85,7 @@ export class AdmPositionPage implements OnInit {
     this.navCtrl.navigateForward('/add-position', navigationExtras);
   }
 
-  async delete(key) {
+  async delete(data) {
     const alert = await this.alertCtrl.create({
       header: 'ยืนยัน!',
       message: 'คุณต้องการลบรายการนี้ใช่หรือไม่?',
@@ -114,16 +101,21 @@ export class AdmPositionPage implements OnInit {
         {
           text: 'ใช่',
           handler: () => {
-            firebase
-              .database()
-              .ref('officer/' + key)
-              .remove();
+            this.delAllData(data);
           },
         },
       ],
     });
 
     await alert.present();
+  }
+  async delAllData(data) {
+    for (const iterator of data.tel_id) {
+      await firebase.database().ref('tel/').child(iterator).remove();
+    }
+    await firebase.database().ref('incumbent/').child(data.id_inc).remove();
+    await firebase.database().ref('officer/').child(data.id_position).remove();
+    this.getAllPosition('', '');
   }
   setDataTel() {
     return new Promise((resolve, reject) => {

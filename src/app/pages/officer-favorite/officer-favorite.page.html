@@ -18,17 +18,36 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let officer of officerList" no-padding no-margin style="margin-top: 8px; margin-bottom: 4px;">
-    <ion-item>
-      <ion-label>
-        <h5>{{officer.ministry}}</h5>
-        <p>{{officer.position}} {{officer.name}}</p>
-      </ion-label>
-    </ion-item>
+  <ion-card *ngFor="let officer of officerList; let i = index;" no-padding no-margin style="margin-top: 8px; margin-bottom: 4px">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none" class="box">
+          <ion-label>
+            <h5>หน่วยงาน : {{officer.ministry_name}}</h5>
+            <p>ตำแหน่ง : {{officer.name_inc}}</p>
+            <p>ชื่อ : {{officer.name_po}}</p>
+          </ion-label>
+        </ion-item>
+        <hr style="height: 1px; background-color: #e0e0e0" />
+      </ion-col>
+    </ion-row>
     <ion-card-content>
-      <p>หมายเลขโทรศัพท์มือถือ {{officer.tel}}</p>
-      <p>หมายเลขโทรศัพท์สำนักงาน {{officer.fax}}</p>
-      <p>รายละเอียดที่อยู่: {{officer.address}}</p>
+      <ion-row class="ion-no-padding">
+        <ion-col class="ion-no-padding" size="7"><p>หมายเลขโทรศัพท์มือถือ :</p></ion-col>
+        <ion-col class="ion-no-padding" size="5">
+          <ion-button expand="block" size="small" *ngFor="let item of officerList[i].tel" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <hr style="height: 1px; background-color: #e0e0e0" />
+      <ion-row class="ion-no-padding">
+        <ion-col class="ion-no-padding" size="7"><p>หมายเลขโทรศัพท์สำนักงาน :</p></ion-col>
+        <ion-col class="ion-no-padding" size="5">
+          <ion-button expand="block" size="small" *ngFor="let item of officerList[i].fax" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- <p>หมายเลขโทรศัพท์มือถือ {{officer.tel}}</p> -->
+      <!-- <p>หมายเลขโทรศัพท์สำนักงาน {{officer.fax}}</p> -->
+      <!-- <p>รายละเอียดที่อยู่: {{officer.address}}</p> -->
     </ion-card-content>
     <ion-footer>
       <ion-row>
@@ -39,15 +58,15 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="full" color="light" (click)="actionMap(officer.lat, officer.lng)">
-            <ion-icon slot="icon-only" name="pin"></ion-icon>
+          <ion-button expand="full" color="light" (click)="actionMap(officer.lat, officer.long)">
+            <ion-icon name="pin"></ion-icon>
           </ion-button>
         </ion-col>
-        <ion-col>
-          <ion-button expand="full" color="light" (click)="actionCall(officer.tel)">
+        <!-- <ion-col>
+          <ion-button expand="full" color="light" (click)="actionCall(officer)">
             <ion-icon slot="icon-only" name="call"></ion-icon>
           </ion-button>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-footer>
   </ion-card>

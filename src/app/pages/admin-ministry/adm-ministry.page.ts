@@ -20,7 +20,6 @@ export class AdmMinistryPage implements OnInit {
         item.id = snapshot.key;
         this.ministry.push(item);
       });
-      // this.ministry = snapshotToArray(resp);
     });
   }
 

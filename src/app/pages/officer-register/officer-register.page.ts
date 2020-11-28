@@ -20,23 +20,20 @@ export class OfficerRegisterPage implements OnInit {
   dataRun: any = 0;
   ref = firebase.database().ref('user/');
 
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder,
-    public toastCtrl: ToastController,
-    public alertCtrl: AlertController
-  ) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public loadingCtrl: LoadingController, private formBuilder: FormBuilder, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+    let dataSet = [];
     firebase
       .database()
       .ref(`user/`)
-      .limitToLast(1)
       .on(`value`, (resp) => {
         resp.forEach((snapshot) => {
           let item = snapshot.key;
-          this.dataRun = Number(item.replace('U', ''));
+          dataSet.push(Number(item.replace('U', '')));
         });
+        let sort = dataSet.sort(function (a, b) {
+          return b - a;
+        });
+        this.dataRun = sort[0];
       });
   }
 
@@ -59,9 +56,9 @@ export class OfficerRegisterPage implements OnInit {
           firebase
             .database()
             .ref(`user/`)
-            .child(`U0000${Number(this.dataRun) + 1}`)
+            .child(`U0000${Number(this.dataRun ? this.dataRun : 0) + 1}`)
             .set({
-              name: this.fullname,
+              name_user: this.fullname,
               address: this.address,
               email: this.email,
               password: this.password,

@@ -1,55 +1,43 @@
 <ion-content padding class="animated fadeIn login auth-page">
   <div class="theme-bg"></div>
-  <div class="auth-content" style="margin-top: 3em;">
-
+  <div class="auth-content" style="margin-top: 3em">
     <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown">
       <div class="logo"></div>
       <h5 style="margin-top: 30px">
-        <ion-text color="light" class="fw500">
-          สมุดโทรศัพท์อิเล็กทรอนิกส์ จังหวัดปราจีนบุรี
-        </ion-text>
+        <ion-text color="light" class="fw500"> สมุดโทรศัพท์อิเล็กทรอนิกส์ จังหวัดปราจีนบุรี </ion-text>
       </h5>
       <h5 style="margin-top: 10px">
-        <ion-text color="light" class="fw500">
-          Electronic Phone Book of Prachinburi Province
-        </ion-text>
+        <ion-text color="light" class="fw500"> Electronic Phone Book of Prachinburi Province </ion-text>
       </h5>
     </div>
 
     <!-- Login form -->
-    <form [formGroup]="onLoginForm" class="list-form" style="margin-top: 3vh;">
-      <ion-item no-padding class="animated fadeInUp">
+    <form [formGroup]="onLoginForm" class="list-form" style="margin-top: 3vh">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="mail" item-start></ion-icon>
           Email
         </ion-label>
         <ion-input color="secondary" type="email" formControlName="email" [(ngModel)]="email"></ion-input>
       </ion-item>
-      <p ion-text class="text08"
-         *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">
-        <ion-text color="warning">
-          Required Field
-        </ion-text>
+      <p ion-text class="text08" *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">
+        <ion-text color="warning"> Required Field </ion-text>
       </p>
 
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item no-padding class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="lock" item-start></ion-icon>
           Password
         </ion-label>
         <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
       </ion-item>
-      <p ion-text color="warning" class="text08"
-         *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
-        <ion-text color="warning">
-          Required Field
-        </ion-text>
+      <p ion-text color="warning" class="text08" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
+        <ion-text color="warning"> Required Field </ion-text>
       </p>
 
-      <div style="margin-top: 20px;">
-        <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="goToHome()"
-                    [disabled]="!onLoginForm.valid" tappable>
+      <div style="margin-top: 20px">
+        <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="goToHome()" [disabled]="!onLoginForm.valid" tappable>
           <ion-icon name="log-in"></ion-icon>
           เข้าสู่ระบบ
         </ion-button>
@@ -59,11 +47,8 @@
     <!-- Other links -->
     <div text-center margin-top>
       <span (click)="goToRegister()" class="paz" tappable>
-        <ion-text color="light">
-          ยังไม่มีบัญชีผู้ใช้? <strong>ลงทะเบียน</strong>
-        </ion-text>
+        <ion-text color="light"> ยังไม่มีบัญชีผู้ใช้? <strong>ลงทะเบียน</strong> </ion-text>
       </span>
     </div>
-
   </div>
 </ion-content>

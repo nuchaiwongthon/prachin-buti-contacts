@@ -65,17 +65,26 @@
         <ion-text color="warning"> กรุณากรอกหมายเลขโทรศัพท์มือถือ </ion-text>
       </p>
       <ion-textarea formControlName="tel_all" [(ngModel)]="tel_all_show"></ion-textarea>
-      <ion-item no-padding no-margin class="animated fadeInUp">
-        <ion-label position="floating">
-          <ion-icon name="print" item-start></ion-icon>
-          หมายเลขโทรศัพท์สำนักงาน
-        </ion-label>
-        <ion-input color="secondary" type="tel" formControlName="fax" [(ngModel)]="fax"></ion-input>
-      </ion-item>
+      <ion-row class="ion-no-padding">
+        <ion-col size="10" class="ion-no-padding">
+          <ion-item no-padding no-margin class="animated fadeInUp">
+            <ion-label position="floating">
+              <ion-icon name="print" item-start></ion-icon>
+              หมายเลขโทรศัพท์สำนักงาน
+            </ion-label>
+            <ion-input color="secondary" type="tel" formControlName="fax" [(ngModel)]="fax_p"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2" class="ion-padding-top">
+          <ion-button size="small" (click)="addFax()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
       <p ion-text class="text08" *ngIf="onAddPositionForm.get('fax').touched && onAddPositionForm.get('fax').hasError('required')">
         <ion-text color="warning"> กรุณากรอกหมายเลขโทรศัพท์สำนักงาน </ion-text>
       </p>
-
+      <ion-textarea formControlName="fax_all" [(ngModel)]="fax_all_show"></ion-textarea>
       <ion-item no-padding no-margin class="animated fadeInUp">
         <ion-text color="dark" class="ion-margin-top">แผนที่ตั้ง</ion-text>
       </ion-item>
@@ -113,16 +122,7 @@
       </p>
 
       <div style="margin-top: 20px">
-        <ion-button
-          icon-left
-          size="medium"
-          expand="full"
-          shape="round"
-          color="dark"
-          (click)="addPosition()"
-          [disabled]="!onAddPositionForm.valid"
-          tappable
-        >
+        <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="addPosition()" [disabled]="!onAddPositionForm.valid" tappable>
           <ion-icon name="checkmark"></ion-icon>
           บันทึก
         </ion-button>

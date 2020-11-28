@@ -121,54 +121,51 @@ export class LoginPage implements OnInit {
         this.user = firebase.auth().currentUser;
         if (this.user !== null) {
           const email = this.user.email;
-          if (email === 'admin@gmail.com') {
-            this.navCtrl.navigateRoot('/admin-check-user');
-          } else {
-            const ref = firebase.database().ref('user/');
-            firebase.database();
-            ref
-              .orderByChild('email')
-              .equalTo(email)
-              .on('child_added', (data) => {
-                localStorage.setItem('user', data.key);
-                console.log('Start at filter: ' + data.val().email);
-                if (data.val().email && data.val().password === this.password) {
-                  if (data.val().verify === 0) {
-                    this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
-                    firebase.auth().signOut();
-                  } else if (data.val().verify === 2) {
-                    this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
-                    firebase.auth().signOut();
-                  } else {
-                    // if (data.val().id_type === 'UT00002') {
-                    this.navCtrl.navigateRoot('/officer-ministry');
-                    // }
-                  }
-                } else {
-                  this.showToast('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+          const ref = firebase.database().ref('user/');
+          firebase.database();
+          ref
+            .orderByChild('email')
+            .equalTo(email)
+            .on('child_added', (data) => {
+              localStorage.setItem('user', data.key);
+              console.log('Start at filter: ' + data.val().email);
+              if (data.val().email && data.val().password === this.password) {
+                if (data.val().verify === 0) {
+                  this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
+                  firebase.auth().signOut();
+                } else if (data.val().verify === 2) {
+                  this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
+                  firebase.auth().signOut();
                 }
-              });
-            // firebase
-            //   .database()
-            //   .ref('user/' + this.user.uid)
-            //   .on('value', (snapshot) => {
-            //     const userData = snapshot.val();
-            //     console.log(userData);
-            //     if (userData.verify === 0) {
-            //       this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
-            //       firebase.auth().signOut();
-            //     } else if (userData.verify === 2) {
-            //       this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
-            //       firebase.auth().signOut();
-            //     } else {
-            //       if (userData.position === 0) {
-            //         this.navCtrl.navigateRoot('/officer-ministry');
-            //       } else {
-            //         this.navCtrl.navigateRoot('/officer-ministry');
-            //       }
-            //     }
-            //   });
-          }
+                if (data.val().id_type === 'UT00001') {
+                  this.navCtrl.navigateRoot('/admin-check-user');
+                } else {
+                  this.navCtrl.navigateRoot('/officer-ministry');
+                }
+              } else {
+                this.showToast('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+              }
+            });
+          // firebase
+          //   .database()
+          //   .ref('user/' + this.user.uid)
+          //   .on('value', (snapshot) => {
+          //     const userData = snapshot.val();
+          //     console.log(userData);
+          //     if (userData.verify === 0) {
+          //       this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
+          //       firebase.auth().signOut();
+          //     } else if (userData.verify === 2) {
+          //       this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
+          //       firebase.auth().signOut();
+          //     } else {
+          //       if (userData.position === 0) {
+          //         this.navCtrl.navigateRoot('/officer-ministry');
+          //       } else {
+          //         this.navCtrl.navigateRoot('/officer-ministry');
+          //       }
+          //     }
+          //   });
         } else {
           this.showToast('ไม่มีผู้ใช้งานนี้ในระบบ');
           firebase.auth().signOut();
