@@ -26,7 +26,7 @@
   </ion-item> -->
   <ion-item>
     <ion-label>เลือกกระทรวง</ion-label>
-    <ion-select [(ngModel)]="searchName" (ionChange)="searchData($event)">
+    <ion-select [(ngModel)]="searchName" (ionChange)="searchData($event)" interface="popover">
       <ion-select-option *ngFor="let _ministry of ministryList" [value]="_ministry.id">{{_ministry.name_min}}</ion-select-option>
     </ion-select>
   </ion-item>

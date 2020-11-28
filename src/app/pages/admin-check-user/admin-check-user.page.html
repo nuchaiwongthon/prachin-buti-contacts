@@ -17,7 +17,7 @@
     <ion-item-sliding *ngFor="let user of users">
       <ion-item detail lines="full">
         <ion-label class="ion-text-wrap">
-          <p style="color: #000000">{{user.name}}</p>
+          <p style="color: #000000">{{user.name_user}}</p>
           <ion-text color="secondary">
             <p>{{user.detail}}</p>
           </ion-text>
@@ -28,11 +28,11 @@
           <ion-icon name="eye"></ion-icon>
           <p>รายละเอียด</p>
         </ion-item-option>
-        <ion-item-option color="success" (click)="accept(user.id)">
+        <ion-item-option color="success" (click)="accept(user.id_user)">
           <ion-icon name="checkmark"></ion-icon>
           <p>ยอมรับ</p>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="denied(user.id)">
+        <ion-item-option color="danger" (click)="denied(user.id_user)">
           <ion-icon name="close"></ion-icon>
           <p>ปฏิเสธ</p>
         </ion-item-option>

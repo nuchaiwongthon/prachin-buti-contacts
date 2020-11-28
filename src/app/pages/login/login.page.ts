@@ -114,38 +114,48 @@ export class LoginPage implements OnInit {
   }
 
   async goToHome() {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.email, this.password)
-      .then((value) => {
-        this.user = firebase.auth().currentUser;
-        if (this.user !== null) {
-          const email = this.user.email;
-          const ref = firebase.database().ref('user/');
-          firebase.database();
-          ref
-            .orderByChild('email')
-            .equalTo(email)
-            .on('child_added', (data) => {
-              localStorage.setItem('user', data.key);
-              console.log('Start at filter: ' + data.val().email);
-              if (data.val().email && data.val().password === this.password) {
-                if (data.val().verify === 0) {
-                  this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
-                  firebase.auth().signOut();
-                } else if (data.val().verify === 2) {
-                  this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
-                  firebase.auth().signOut();
-                }
-                if (data.val().id_type === 'UT00001') {
-                  this.navCtrl.navigateRoot('/admin-check-user');
+    try {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((value) => {
+          this.user = firebase.auth().currentUser;
+          if (this.user !== null) {
+            const email = this.user.email;
+            const ref = firebase.database().ref('user/');
+            firebase.database();
+            ref
+              .orderByChild('email')
+              .equalTo(email)
+              .on('child_added', (data) => {
+                localStorage.setItem('user', data.key);
+                if (data.val().email && data.val().password === this.password) {
+                  if (data.val().id_type === 'UT00001' || data.val().id_type === 'UT00002') {
+                    if (data.val().verify === 0) {
+                      this.showToast('รอเจ้าหน้าที่ทำการตรวจสอบ');
+                      firebase.auth().signOut();
+                    } else if (data.val().verify === 2) {
+                      this.showToast('บัญชีผู้ใช้งานนี้ถูกระงับการให้บริการ');
+                      firebase.auth().signOut();
+                    } else {
+                      if (data.val().id_type === 'UT00001') {
+                        this.navCtrl.navigateRoot('/admin-check-user');
+                      } else {
+                        this.navCtrl.navigateRoot('/officer-ministry');
+                      }
+                    }
+                  } else {
+                    this.navCtrl.navigateRoot('/officer-ministry');
+                  }
                 } else {
-                  this.navCtrl.navigateRoot('/officer-ministry');
+                  this.showToast('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
                 }
-              } else {
-                this.showToast('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
-              }
-            });
+              });
+          } else {
+            this.showToast('ไม่มีผู้ใช้งานนี้ในระบบ');
+            firebase.auth().signOut();
+          }
+
           // firebase
           //   .database()
           //   .ref('user/' + this.user.uid)
@@ -166,10 +176,12 @@ export class LoginPage implements OnInit {
           //       }
           //     }
           //   });
-        } else {
-          this.showToast('ไม่มีผู้ใช้งานนี้ในระบบ');
-          firebase.auth().signOut();
-        }
-      });
+        })
+        .catch((e) => {
+          this.showToast(e.code);
+        });
+    } catch (error) {
+      this.showToast(error);
+    }
   }
 }

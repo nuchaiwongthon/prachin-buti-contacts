@@ -15,7 +15,7 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let user of updates">
-      <ion-item detail lines="full"> {{user.name}} </ion-item>
+      <ion-item detail lines="full"> {{user.name_user}} </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="primary" (click)="view(user)">
           <ion-icon name="eye"></ion-icon>

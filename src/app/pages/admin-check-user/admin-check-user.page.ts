@@ -11,33 +11,29 @@ export class AdminCheckUserPage implements OnInit {
   users = [];
   ref = firebase.database().ref('user/');
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController) {
-    this.getUsers();
-  }
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController) {}
 
   getUsers() {
+    this.users = [];
     this.ref
       .orderByChild('verify')
       .equalTo(0)
-      .on('child_added', (resp) => {
-        this.users = [];
-        if (resp.val().id_type === 'UT00002') {
-          this.users.push({
-            id: resp.key,
-            address: resp.val().address,
-            email: resp.val().email,
-            id_type: resp.val().id_type,
-            name_user: resp.val().name_user,
-            password: resp.val().password,
-            uid: resp.val().uid,
-            verify: resp.val().verify,
-            // resp.val()
-          });
-        }
+      .on(`value`, (resp) => {
+        resp.forEach((snapshot) => {
+          let item = snapshot.val();
+          item.id_user = snapshot.key;
+          if (item.id_type === 'UT00002') {
+            this.users.push(item);
+          }
+        });
+        console.log(this.users);
       });
   }
 
   ngOnInit() {}
+  ionViewDidEnter() {
+    this.getUsers();
+  }
 
   async view(user: any) {
     const userData = [];
@@ -85,10 +81,9 @@ export class AdminCheckUserPage implements OnInit {
     firebase
       .database()
       .ref('user/' + id_user)
-      .update(verify)
-      .then((value) => {
-        this.getUsers();
-      });
+      .update(verify);
+
+    this.getUsers();
   }
 
   async denied(id_user: string) {
@@ -98,10 +93,8 @@ export class AdminCheckUserPage implements OnInit {
     firebase
       .database()
       .ref('user/' + id_user)
-      .update(verify)
-      .then((value) => {
-        this.getUsers();
-      });
+      .update(verify);
+    this.getUsers();
   }
 
   ionViewWillEnter() {
