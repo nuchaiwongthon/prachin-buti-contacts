@@ -163,5 +163,6 @@ export class UserEditProfilePage implements OnInit {
         }
       }
     }
+    this.navCtrl.navigateForward('/');
   }
 }

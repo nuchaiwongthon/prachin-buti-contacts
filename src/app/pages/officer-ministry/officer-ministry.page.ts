@@ -38,7 +38,9 @@ export class OfficerMinistryPage implements OnInit {
         });
       });
   }
-
+  ionViewDidEnter() {
+    this.getOfficers('');
+  }
   searchData(event: any) {
     const val = event.target.value;
     this.getOfficers(val);
@@ -84,8 +86,10 @@ export class OfficerMinistryPage implements OnInit {
         } else {
           position_arr[index].favorite = false;
         }
+        if (position_arr[index].id_ministry.includes(search)) {
+          this.officerList.push(position_arr[index]);
+        }
       }
-      this.officerList = position_arr;
     }
   }
   ngOnInit() {
@@ -191,8 +195,6 @@ export class OfficerMinistryPage implements OnInit {
       firebase
         .database()
         .ref(`position/`)
-        .orderByChild(`id_ministry`)
-        .equalTo(search)
         .on('value', (data) => {
           data.forEach((dataSnapshot) => {
             const item = dataSnapshot.val();
@@ -216,8 +218,6 @@ export class OfficerMinistryPage implements OnInit {
             this.notificationShow = count - this.notificationCount;
             // this.notificationCount++;
             this.notificationList.push(item);
-            console.log('Notification Show: ' + this.notificationShow);
-            console.log('Notification Count: ' + this.notificationCount);
           }
           count++;
         });
