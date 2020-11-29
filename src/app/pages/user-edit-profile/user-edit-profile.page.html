@@ -11,9 +11,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <form [formGroup]="onRegisterForm" class="list-form">
-    <ion-item no-padding no-margin class="animated fadeInUp">
+    <ion-item class="ion-no-padding" no-margin class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="person" item-start></ion-icon>
         ชื่อ-นามสกุล
@@ -24,7 +24,7 @@
       <ion-text color="warning"> กรุณากรอกชื่อ-นามสกุล </ion-text>
     </p>
 
-    <ion-item no-padding class="animated fadeInUp">
+    <ion-item class="ion-no-padding" class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="pin" item-start></ion-icon>
         ที่อยู่
@@ -36,7 +36,7 @@
     </p>
 
     <ion-text class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
-    <ion-item no-padding class="animated fadeInUp">
+    <ion-item class="ion-no-padding" class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="mail" item-start></ion-icon>
         Username (ระบุ Email)
@@ -44,7 +44,7 @@
       <ion-input color="secondary" type="text" formControlName="username" [(ngModel)]="email"></ion-input>
     </ion-item>
 
-    <ion-item no-padding class="animated fadeInUp">
+    <ion-item class="ion-no-padding" class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="key"></ion-icon>
         Password
@@ -52,7 +52,7 @@
       <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
-    <ion-item no-padding class="animated fadeInUp">
+    <ion-item class="ion-no-padding" class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="key"></ion-icon>
         New Password
@@ -60,7 +60,7 @@
       <ion-input color="secondary" type="password" formControlName="new-password" [(ngModel)]="newPassword"></ion-input>
     </ion-item>
 
-    <ion-item no-padding class="animated fadeInUp">
+    <ion-item class="ion-no-padding" class="animated fadeInUp">
       <ion-label position="floating">
         <ion-icon name="key"></ion-icon>
         Confirm Password

@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <div padding-top="12px">
     <form [formGroup]="onAddPositionForm" class="list-form">
       <ion-item>
@@ -24,7 +24,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item no-padding no-margin class="animated fadeInUp">
+      <ion-item class="ion-no-padding ion-no-margin" class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="ribbon" item-start></ion-icon>
           ระบุตำแหน่งงาน
@@ -35,7 +35,7 @@
         <ion-text color="warning"> กรุณากรอกตำแหน่งงาน </ion-text>
       </p>
 
-      <ion-item no-padding no-margin class="animated fadeInUp">
+      <ion-item class="ion-no-padding ion-no-margin" class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="person" item-start></ion-icon>
           ชื่อ-นามสกุล
@@ -47,7 +47,7 @@
       </p>
       <ion-row class="ion-no-padding">
         <ion-col size="10" class="ion-no-padding">
-          <ion-item no-padding no-margin class="animated fadeInUp">
+          <ion-item class="ion-no-padding ion-no-margin" class="animated fadeInUp">
             <ion-label position="floating">
               <ion-icon name="call" item-start></ion-icon>
               หมายเลขโทรศัพท์มือถือ
@@ -67,7 +67,7 @@
       <ion-textarea formControlName="tel_all" [(ngModel)]="tel_all_show"></ion-textarea>
       <ion-row class="ion-no-padding">
         <ion-col size="10" class="ion-no-padding">
-          <ion-item no-padding no-margin class="animated fadeInUp">
+          <ion-item class="ion-no-padding ion-no-margin" class="animated fadeInUp">
             <ion-label position="floating">
               <ion-icon name="print" item-start></ion-icon>
               หมายเลขโทรศัพท์สำนักงาน
@@ -85,10 +85,10 @@
         <ion-text color="warning"> กรุณากรอกหมายเลขโทรศัพท์สำนักงาน </ion-text>
       </p>
       <ion-textarea formControlName="fax_all" [(ngModel)]="fax_all_show"></ion-textarea>
-      <ion-item no-padding no-margin class="animated fadeInUp">
+      <ion-item class="ion-no-padding ion-no-margin" class="animated fadeInUp">
         <ion-text color="dark" class="ion-margin-top">แผนที่ตั้ง</ion-text>
       </ion-item>
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item class="ion-no-padding" class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="pin" item-start></ion-icon>
           รายละเอียดที่อยู่
@@ -99,7 +99,7 @@
         <ion-text color="warning"> กรุณากรอกรายละเอียดที่อยู่ </ion-text>
       </p>
 
-      <ion-item no-padding class="animated fadeInUp">
+      <ion-item class="ion-no-padding" class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="pin" item-start></ion-icon>
           ละติจูด
