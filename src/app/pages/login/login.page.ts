@@ -84,7 +84,6 @@ export class LoginPage implements OnInit {
             loader.present();
             loader.onWillDismiss().then(async (l) => {
               const toast = await this.toastCtrl.create({
-                showCloseButton: true,
                 message: 'Email was sended successfully.',
                 duration: 3000,
                 position: 'bottom',

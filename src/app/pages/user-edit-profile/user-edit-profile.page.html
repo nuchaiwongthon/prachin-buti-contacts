@@ -1,9 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button size="small" shape="round" color="medium" (click)="back()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
+      <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-title>
       <ion-text color="light">
@@ -48,7 +46,7 @@
 
     <ion-item no-padding class="animated fadeInUp">
       <ion-label position="floating">
-        <ion-icon name="lock" item-start></ion-icon>
+        <ion-icon name="key"></ion-icon>
         Password
       </ion-label>
       <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
@@ -56,7 +54,7 @@
 
     <ion-item no-padding class="animated fadeInUp">
       <ion-label position="floating">
-        <ion-icon name="lock" item-start></ion-icon>
+        <ion-icon name="key"></ion-icon>
         New Password
       </ion-label>
       <ion-input color="secondary" type="password" formControlName="new-password" [(ngModel)]="newPassword"></ion-input>
@@ -64,17 +62,14 @@
 
     <ion-item no-padding class="animated fadeInUp">
       <ion-label position="floating">
-        <ion-icon name="lock" item-start></ion-icon>
+        <ion-icon name="key"></ion-icon>
         Confirm Password
       </ion-label>
       <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>
     </ion-item>
 
     <div style="margin-top: 20px">
-      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="updateProfile()" [disabled]="!onRegisterForm.valid" tappable>
-        <ion-icon name="checkmark"></ion-icon>
-        แก้ไขข้อมูล
-      </ion-button>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="updateProfile()" [disabled]="!onRegisterForm.valid" tappable> <ion-icon name="checkmark"></ion-icon> &nbsp; แก้ไขข้อมูล </ion-button>
     </div>
   </form>
 </ion-content>

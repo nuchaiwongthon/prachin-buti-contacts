@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu>
+    <ion-menu side="start" type="push" contentId="main">
       <ion-header>
         <ion-toolbar color="dark" class="user-profile">
           <div class="ion-padding">
@@ -18,15 +18,15 @@
               <ion-menu-toggle class="mto" auto-hide="false">
                 <a class="text08" tappable (click)="goToEditProfile()">
                   <ion-text color="medium">
-                    <ion-icon name="contact"></ion-icon>
-                    <strong>แก้ไขข้อมูลส่วนตัว</strong>
+                    <ion-icon name="create"></ion-icon>
+                    <strong> แก้ไขข้อมูลส่วนตัว</strong>
                   </ion-text>
                 </a>
-                <ion-text color="secondary"> |</ion-text>
+                <ion-text color="secondary"> | </ion-text>
                 <a class="text08" tappable (click)="logout()">
                   <ion-text color="medium">
                     <ion-icon name="log-out"></ion-icon>
-                    <strong>ออกจากระบบ</strong>
+                    <strong> ออกจากระบบ</strong>
                   </ion-text>
                 </a>
               </ion-menu-toggle>
@@ -48,6 +48,7 @@
         </ion-list>
       </ion-content>
     </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
   </ion-split-pane>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>

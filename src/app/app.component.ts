@@ -1,19 +1,24 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-import { Pages } from './interfaces/pages';
 
 import { environment } from 'src/environments/environment';
 
 import * as firebase from 'firebase';
 
+export interface Pages {
+  title: string;
+  url: any;
+  direct?: string;
+  icon?: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
   public appPages: Array<Pages>;
@@ -22,10 +27,8 @@ export class AppComponent {
   email: any;
 
   position: any;
-
   constructor(private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, public navCtrl: NavController) {
-    this.initializeApp();
-
+    firebase.initializeApp(environment.firebase);
     firebase.auth().onAuthStateChanged((user) => {
       if (user !== null) {
         if (user.email === 'admin@gmail.com') {
@@ -122,7 +125,7 @@ export class AppComponent {
                     title: 'บันทึกความทรงจำ',
                     url: '/officer-note',
                     direct: 'forward',
-                    icon: 'paper',
+                    icon: 'brush',
                   },
                   {
                     title: 'รายการโปรด',
@@ -133,19 +136,9 @@ export class AppComponent {
                 ];
               }
             });
-          // firebase
-          //   .database()
-          //   .ref('user/' + user.uid)
-          //   .on('value', (snapshot) => {
-          //     const userData = snapshot.val();
-          //     console.log(userData);
-
-          // }
-          // });
         }
       }
     });
-    // const user = firebase.auth().currentUser;
   }
 
   initializeApp() {
@@ -156,7 +149,6 @@ export class AppComponent {
         this.splashScreen.hide();
       })
       .catch(() => {});
-    firebase.initializeApp(environment.firebase);
   }
 
   goToEditProfile() {

@@ -67,10 +67,6 @@ export class UserEditProfilePage implements OnInit {
     toast.present();
   }
 
-  back() {
-    this.navCtrl.navigateRoot('/officer-ministry');
-  }
-
   updateProfile() {
     let updateUser = {};
     if (this.user) {
@@ -163,6 +159,5 @@ export class UserEditProfilePage implements OnInit {
         }
       }
     }
-    this.navCtrl.navigateForward('/');
   }
 }
