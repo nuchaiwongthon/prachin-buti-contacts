@@ -171,7 +171,9 @@ export class OfficerPositionPage implements OnInit {
 
   actionMap(lat: string, lng: string) {
     const destination = [Number(lat), Number(lng)];
-    this.launchNavigator.navigate(destination);
+    // this.launchNavigator.navigate(destination);
+
+    window.open(`"https://www.google.com/maps/search/?api=1&query=${lat},${lng}"`);
   }
 
   async actionFavorite(officer: any) {
