@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { OfficerFavoritePage } from './officer-favorite.page';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 
 const routes: Routes = [
@@ -19,6 +18,6 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
   declarations: [OfficerFavoritePage],
-  providers: [CallNumber, LaunchNavigator],
+  providers: [CallNumber],
 })
 export class OfficerFavoritePageModule {}

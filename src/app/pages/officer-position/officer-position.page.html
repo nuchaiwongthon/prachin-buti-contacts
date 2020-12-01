@@ -26,14 +26,14 @@
     <ion-input type="text" placeholder="ค้นหาตำแหน่งราชการ" [(ngModel)]="searchPosition" (ionChange)="search('', searchPosition)" debounce="700"></ion-input>
     <ion-icon name="search"></ion-icon>
   </ion-item>
-  <ion-card *ngFor="let officer of officerList; let i = index;" no-padding no-margin style="margin-top: 8px; margin-bottom: 4px">
+  <ion-card *ngFor="let officer of officerList; let i = index;" class="ion-no-padding ion-no-margin" style="margin-top: 8px; margin-bottom: 4px">
     <ion-row>
       <ion-col size="12">
         <ion-item lines="none" class="box">
           <ion-label>
-            <h5>หน่วยงาน : {{officer.ministry_name}}</h5>
+            <b>ชื่อ : {{officer.name_po}}</b>
+            <p>หน่วยงาน : {{officer.name_min}}</p>
             <p>ตำแหน่ง : {{officer.name_inc}}</p>
-            <p>ชื่อ : {{officer.name_po}}</p>
           </ion-label>
         </ion-item>
         <hr style="height: 1px; background-color: #e0e0e0" />
@@ -41,32 +41,34 @@
     </ion-row>
     <ion-card-content>
       <ion-row class="ion-no-padding">
-        <ion-col class="ion-no-padding" size="7"><p>หมายเลขโทรศัพท์มือถือ :</p></ion-col>
-        <ion-col class="ion-no-padding" size="5">
-          <ion-button expand="block" size="small" *ngFor="let item of officerList[i].tel" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
+        <ion-col class="ion-no-padding" size="6"><p>หมายเลขโทรศัพท์มือถือ :</p></ion-col>
+        <ion-col class="ion-no-padding" size="6">
+          <ion-button expand="block" size="small" color="secondary" *ngFor="let item of officerList[i].tel" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-padding">
+        <ion-col class="ion-no-padding" size="6"><p>หมายเลขโทรศัพท์สำนักงาน :</p></ion-col>
+        <ion-col class="ion-no-padding" size="6">
+          <ion-button expand="block" size="small" color="secondary" *ngFor="let item of officerList[i].fax" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
         </ion-col>
       </ion-row>
       <hr style="height: 1px; background-color: #e0e0e0" />
-      <ion-row class="ion-no-padding">
-        <ion-col class="ion-no-padding" size="7"><p>หมายเลขโทรศัพท์สำนักงาน :</p></ion-col>
-        <ion-col class="ion-no-padding" size="5">
-          <ion-button expand="block" size="small" *ngFor="let item of officerList[i].fax" (click)="actionCall(item)"><ion-icon slot="icon-only" name="call"></ion-icon> &nbsp;{{item}}</ion-button>
+      <ion-row>
+        <ion-col size="12">
+          <p>รายละเอียดที่อยู่ : {{officer.address}}</p>
         </ion-col>
       </ion-row>
-      <!-- <p>หมายเลขโทรศัพท์มือถือ {{officer.tel}}</p> -->
-      <!-- <p>หมายเลขโทรศัพท์สำนักงาน {{officer.fax}}</p> -->
-      <p>รายละเอียดที่อยู่: {{officer.address}}</p>
     </ion-card-content>
     <ion-footer>
       <ion-row>
         <ion-col>
-          <ion-button expand="full" color="light" (click)="actionFavorite(officer)">
-            <ion-icon slot="icon-only" name="star" style="color: #d83636" *ngIf="officer.favorite"></ion-icon>
-            <ion-icon slot="icon-only" name="star" *ngIf="!officer.favorite"></ion-icon>
+          <ion-button expand="block" [color]="officer.favorite ? 'danger': 'light'" (click)="actionFavorite(officer)">
+            <ion-icon slot="icon-only" name="star" style="color: black" *ngIf="!officer.favorite"></ion-icon>
+            <ion-icon slot="icon-only" name="star" style="color: light" *ngIf="officer.favorite"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="full" color="light" (click)="actionMap(officer.lat, officer.long)">
+          <ion-button expand="block" color="light" (click)="actionMap(officer.lat, officer.long)">
             <ion-icon name="navigate"></ion-icon>
           </ion-button>
         </ion-col>

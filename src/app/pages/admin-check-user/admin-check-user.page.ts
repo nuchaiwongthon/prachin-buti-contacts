@@ -26,7 +26,6 @@ export class AdminCheckUserPage implements OnInit {
             this.users.push(item);
           }
         });
-        console.log(this.users);
       });
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, MenuController, ModalController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import * as firebase from 'Firebase';
 import { snapshotToArray } from '../admin-ministry/adm-ministry.page';
 import { NavigationExtras } from '@angular/router';
@@ -19,7 +18,7 @@ export class OfficerNotePage implements OnInit {
 
   user: any;
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber, private launchNavigator: LaunchNavigator) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber) {
     this.user = firebase.auth().currentUser;
   }
 

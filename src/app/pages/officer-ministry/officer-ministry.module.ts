@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { OfficerMinistryPage } from './officer-ministry.page';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 const routes: Routes = [
   {
@@ -19,6 +18,6 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
   declarations: [OfficerMinistryPage],
-  providers: [CallNumber, LaunchNavigator],
+  providers: [CallNumber],
 })
 export class OfficerMinistryPageModule {}

@@ -51,8 +51,6 @@ export class AddMinistryPage implements OnInit {
         let sort = dataSet.sort(function (a, b) {
           return b - a;
         });
-        console.log(sort);
-
         this.dataRun = sort[0];
       });
     if (this.isUpdate) {

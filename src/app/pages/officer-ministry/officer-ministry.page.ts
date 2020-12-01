@@ -3,7 +3,6 @@ import { AlertController, MenuController, ModalController, NavController, Popove
 import * as firebase from 'Firebase';
 import { snapshotToArray } from '../admin-ministry/adm-ministry.page';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { async } from '@angular/core/testing';
 
 @Component({
@@ -27,7 +26,7 @@ export class OfficerMinistryPage implements OnInit {
   ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber, private launchNavigator: LaunchNavigator) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber) {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
@@ -55,6 +54,7 @@ export class OfficerMinistryPage implements OnInit {
       const tel: any = await this.setDataTel();
       const inc: any = await this.setDataIncumbent();
       const fav: any = await this.setDataFav();
+      const min: any = await this.setDataMinistry();
       this.officerList = [];
       for (let index = 0; index < tel.length; index++) {
         let find_index_tel = position.findIndex((e) => e.id_position === tel[index].id_position);
@@ -79,12 +79,17 @@ export class OfficerMinistryPage implements OnInit {
           position_arr[index].id_inc = inc[find_index_inc].id_inc;
           position_arr[index].name_inc = inc[find_index_inc].name_inc;
         }
+
         let find_index_fav = fav.findIndex((e) => e.id_position === position_arr[index].id_position);
         if (find_index_fav !== -1) {
           position_arr[index].favorite = true;
           position_arr[index].id_fav = fav[find_index_fav].id_fav;
         } else {
           position_arr[index].favorite = false;
+        }
+        let find_index_min = min.findIndex((e) => e.id_ministry === position_arr[index].id_ministry);
+        if (find_index_min !== -1) {
+          position_arr[index].name_min = min[find_index_min].name_min;
         }
         if (position_arr[index].id_ministry.includes(search)) {
           this.officerList.push(position_arr[index]);
@@ -99,7 +104,6 @@ export class OfficerMinistryPage implements OnInit {
       .on('value', (data) => {
         this.ministryList = [];
         this.ministryList = snapshotToArray(data);
-        console.log(this.ministryList);
       });
   }
   ionViewWillEnter() {
@@ -257,6 +261,23 @@ export class OfficerMinistryPage implements OnInit {
           data.forEach((dataSnapshot) => {
             const item = dataSnapshot.val();
             item.id_fav = dataSnapshot.key;
+            data_set.push(item);
+          });
+          resolve(data_set);
+        });
+    });
+  }
+  setDataMinistry() {
+    return new Promise((resolve, reject) => {
+      let data_set = [];
+      firebase
+        .database()
+        .ref(`ministry/`)
+        .on('value', (resp) => {
+          let count = 1;
+          resp.forEach((data) => {
+            const item = data.val();
+            item.id_ministry = data.key;
             data_set.push(item);
           });
           resolve(data_set);

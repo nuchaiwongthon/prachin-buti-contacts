@@ -15,14 +15,14 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content pclass="ion-padding" adding>
+<ion-content class="ion-padding">
   <ion-list>
     <ion-item-sliding *ngFor="let note of noteList">
       <ion-item detail lines="full">
         <ion-label class="ion-text-wrap">
-          <p style="color: #000000">{{note.title}}</p>
+          <b style="color: #000000">หัวข้อ : {{note.title}}</b>
           <ion-text color="secondary">
-            <p>{{note.detail}}</p>
+            <p>รายละเอียด : {{note.detail}}</p>
           </ion-text>
         </ion-label>
       </ion-item>

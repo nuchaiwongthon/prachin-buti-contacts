@@ -54,7 +54,6 @@ export class AddPositionPage implements OnInit {
         this.lng = this.officer.long;
         this.isUpdate = true;
         this.titleName = 'แก้ไขข้อมูลตำแหน่งงาน';
-
         if (this.officer.tel) {
           this.tel_all_show = this.officer.tel ? this.officer.tel.join(',') + ',' : '';
         }
@@ -138,8 +137,7 @@ export class AddPositionPage implements OnInit {
           }
         }
       }
-
-      if (data_set.length && data_set_fax) {
+      if (data_set.length && data_set_fax.length) {
         await this.selectMinistry(this.ministryList);
         this.number_position_run = (await this.getLastRecordPosition()) !== undefined ? await this.getLastRecordPosition() : 0;
         this.number_inc_run = (await this.getLastRecordIncumbent()) !== undefined ? await this.getLastRecordIncumbent() : 0;
@@ -149,6 +147,7 @@ export class AddPositionPage implements OnInit {
         delete this.onAddPositionForm.value.fax_all;
         delete this.onAddPositionForm.value.position;
         this.onAddPositionForm.value.ministry_name = this.ministry_name;
+
         await firebase
           .database()
           .ref('position/' + this.officer.id_position)
@@ -164,7 +163,7 @@ export class AddPositionPage implements OnInit {
           .database()
           .ref('incumbent/' + this.officer.id_inc)
           .update({ name_inc: this.position });
-        this.addTelAll(data_set, data_set_fax);
+        this.addTelAllUpdate(data_set, data_set_fax, this.officer.id_position);
       } else {
         this.showToast('ยังไม่ได้เพิ่มเบอร์โทร');
       }
@@ -295,7 +294,6 @@ export class AddPositionPage implements OnInit {
   }
   async addTelAll(tel, fax) {
     this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
-
     await firebase
       .database()
       .ref(`tel/`)
@@ -312,6 +310,31 @@ export class AddPositionPage implements OnInit {
       .child(`T0000${Number(this.number_tel_run) + 1}`)
       .set({
         id_position: `P0000${Number(this.number_position_run)}`,
+        type_tel: 'tel',
+        tel: tel,
+      });
+  }
+  async addTelAllUpdate(tel, fax, id) {
+    this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
+    console.log('====================================');
+    console.log(this.number_position_run);
+    console.log('====================================');
+    await firebase
+      .database()
+      .ref(`tel/`)
+      .child(`T0000${Number(this.number_tel_run) + 1}`)
+      .set({
+        id_position: id,
+        type_tel: 'fax',
+        tel: fax,
+      });
+    this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
+    await firebase
+      .database()
+      .ref(`tel/`)
+      .child(`T0000${Number(this.number_tel_run) + 1}`)
+      .set({
+        id_position: id,
         type_tel: 'tel',
         tel: tel,
       });

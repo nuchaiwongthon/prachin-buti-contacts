@@ -20,6 +20,7 @@ export class AdmPositionPage implements OnInit {
   ref = firebase.database().ref('position/');
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
+  ref_min = firebase.database().ref('ministry/');
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController) {}
 
@@ -32,6 +33,7 @@ export class AdmPositionPage implements OnInit {
     const position: any = await this.setDataPosition();
     const tel: any = await this.setDataTel();
     const inc: any = await this.setDataIncumbent();
+    const min: any = await this.setDataMinistry();
 
     position_arr = position;
     for (let index = 0; index < tel.length; index++) {
@@ -58,9 +60,13 @@ export class AdmPositionPage implements OnInit {
         position_arr[index].id_inc = inc[find_index_inc].id_inc;
         position_arr[index].name_inc = inc[find_index_inc].name_inc;
       }
+      let find_index_min = min.findIndex((e) => e.id_position === position_arr[index].id_position);
+      if (find_index_min !== -1) {
+        position_arr[index].name_min = min[find_index_min].name_min;
+      }
     }
     for (let index = 0; index < position_arr.length; index++) {
-      if (position_arr[index].name_po.includes(name) && position_arr[index].ministry_name.includes(ministry)) {
+      if (position_arr[index].name_po.includes(name) && position_arr[index].id_ministry.includes(ministry)) {
         this.officer.push(position_arr[index]);
       }
     }
@@ -150,6 +156,19 @@ export class AdmPositionPage implements OnInit {
         resp.forEach((data) => {
           const item = data.val();
           item.id_inc = data.key;
+          data_set.push(item);
+        });
+        resolve(data_set);
+      });
+    });
+  }
+  setDataMinistry() {
+    return new Promise((resolve, reject) => {
+      let data_set = [];
+      this.ref_min.on('value', (resp) => {
+        resp.forEach((data) => {
+          const item = data.val();
+          item.id_tel = data.key;
           data_set.push(item);
         });
         resolve(data_set);

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, MenuController, ModalController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import * as firebase from 'Firebase';
 import { snapshotToArray } from '../admin-ministry/adm-ministry.page';
 
@@ -27,7 +26,7 @@ export class OfficerPhonePage implements OnInit {
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber, private launchNavigator: LaunchNavigator) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber) {
     this.user = firebase.auth().currentUser;
     firebase
       .database()
@@ -57,6 +56,7 @@ export class OfficerPhonePage implements OnInit {
     const tel: any = await this.setDataTel();
     const inc: any = await this.setDataIncumbent();
     const fav: any = await this.setDataFav();
+    const min: any = await this.setDataMinistry();
 
     position_arr = position;
     for (let index = 0; index < tel.length; index++) {
@@ -89,6 +89,10 @@ export class OfficerPhonePage implements OnInit {
         position_arr[index].id_fav = fav[find_index_fav].id_fav;
       } else {
         position_arr[index].favorite = false;
+      }
+      let find_index_min = min.findIndex((e) => e.id_ministry === position_arr[index].id_ministry);
+      if (find_index_min !== -1) {
+        position_arr[index].name_min = min[find_index_min].name_min;
       }
     }
     for (let index = 0; index < position_arr.length; index++) {
@@ -245,6 +249,23 @@ export class OfficerPhonePage implements OnInit {
           data.forEach((dataSnapshot) => {
             const item = dataSnapshot.val();
             item.id_fav = dataSnapshot.key;
+            data_set.push(item);
+          });
+          resolve(data_set);
+        });
+    });
+  }
+  setDataMinistry() {
+    return new Promise((resolve, reject) => {
+      let data_set = [];
+      firebase
+        .database()
+        .ref(`ministry/`)
+        .on('value', (resp) => {
+          let count = 1;
+          resp.forEach((data) => {
+            const item = data.val();
+            item.id_ministry = data.key;
             data_set.push(item);
           });
           resolve(data_set);
