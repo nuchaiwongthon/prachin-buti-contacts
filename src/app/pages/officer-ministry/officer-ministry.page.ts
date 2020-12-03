@@ -137,9 +137,6 @@ export class OfficerMinistryPage implements OnInit {
         }
       }
     }
-    console.log('====================================');
-    console.log(this.officerList);
-    console.log('====================================');
   }
   ngOnInit() {
     firebase

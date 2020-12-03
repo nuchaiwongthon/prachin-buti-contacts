@@ -47,19 +47,25 @@ export class OfficerFavoritePage implements OnInit {
     const tel: any = await this.setDataTel();
     const inc: any = await this.setDataIncumbent();
     const fav: any = await this.setDataFav();
+    const min: any = await this.setDataMinistry();
     this.officerList = [];
     for (let index = 0; index < fav.length; index++) {
       fav[index].favorite = true;
       let find_index_po = position.findIndex((e) => e.id_position === fav[index].id_position);
       if (find_index_po !== -1) {
         fav[index].name_po = position[find_index_po].name_po;
-        fav[index].ministry_name = position[find_index_po].ministry_name;
+        fav[index].id_ministry = position[find_index_po].id_ministry;
       }
       let find_index_inc = inc.findIndex((e) => e.id_position === fav[index].id_position);
       if (find_index_inc !== -1) {
         fav[index].name_inc = inc[find_index_inc].name_inc;
       }
+      let find_index_min = min.findIndex((e) => e.id_ministry === fav[index].id_ministry);
+      if (find_index_min !== -1) {
+        fav[index].name_min = min[find_index_min].name_min;
+      }
     }
+
     for (let index = 0; index < tel.length; index++) {
       let find_index_tel = fav.findIndex((e) => e.id_position === tel[index].id_position);
       if (find_index_tel !== -1) {
@@ -255,6 +261,23 @@ export class OfficerFavoritePage implements OnInit {
           data.forEach((dataSnapshot) => {
             const item = dataSnapshot.val();
             item.id_fav = dataSnapshot.key;
+            data_set.push(item);
+          });
+          resolve(data_set);
+        });
+    });
+  }
+  setDataMinistry() {
+    return new Promise((resolve, reject) => {
+      let data_set = [];
+      firebase
+        .database()
+        .ref(`ministry/`)
+        .on('value', (resp) => {
+          let count = 1;
+          resp.forEach((data) => {
+            const item = data.val();
+            item.id_ministry = data.key;
             data_set.push(item);
           });
           resolve(data_set);

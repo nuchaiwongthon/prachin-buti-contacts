@@ -28,7 +28,9 @@ export class AdminCheckUserPage implements OnInit {
         });
       });
   }
-
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
   ngOnInit() {}
   ionViewDidEnter() {
     this.getUsers();
@@ -94,9 +96,5 @@ export class AdminCheckUserPage implements OnInit {
       .ref('user/' + id_user)
       .update(verify);
     this.getUsers();
-  }
-
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
   }
 }

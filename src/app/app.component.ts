@@ -68,7 +68,6 @@ export class AppComponent {
             .orderByChild('email')
             .equalTo(user.email)
             .on('child_added', (data) => {
-              console.log(data.val().id_type);
               if (data.val().id_type === 'UT00003') {
                 this.name = data.val().name_user;
                 this.email = data.val().email;

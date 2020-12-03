@@ -60,13 +60,13 @@ export class AdmPositionPage implements OnInit {
         position_arr[index].id_inc = inc[find_index_inc].id_inc;
         position_arr[index].name_inc = inc[find_index_inc].name_inc;
       }
-      let find_index_min = min.findIndex((e) => e.id_position === position_arr[index].id_position);
+      let find_index_min = min.findIndex((e) => e.id_ministry === position_arr[index].id_ministry);
       if (find_index_min !== -1) {
         position_arr[index].name_min = min[find_index_min].name_min;
       }
     }
     for (let index = 0; index < position_arr.length; index++) {
-      if (position_arr[index].name_po.includes(name) && position_arr[index].id_ministry.includes(ministry)) {
+      if (position_arr[index].name_po.includes(name) && position_arr[index].name_min.includes(ministry)) {
         this.officer.push(position_arr[index]);
       }
     }
@@ -168,7 +168,7 @@ export class AdmPositionPage implements OnInit {
       this.ref_min.on('value', (resp) => {
         resp.forEach((data) => {
           const item = data.val();
-          item.id_tel = data.key;
+          item.id_ministry = data.key;
           data_set.push(item);
         });
         resolve(data_set);

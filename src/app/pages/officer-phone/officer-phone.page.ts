@@ -137,16 +137,11 @@ export class OfficerPhonePage implements OnInit {
     }
     for (let index = 0; index < position_arr.length; index++) {
       for (let j = 0; j < position_arr[index].tel.length; j++) {
-        if (position_arr[index].tel[j].tel.includes(tele)) {
-          if (this.officerList.findIndex((e) => e.name_inc === position_arr[index].name_inc) === -1) {
-            this.officerList.push(position_arr[index]);
-          }
-        }
-      }
-      for (let j = 0; j < position_arr[index].fax.length; j++) {
-        if (position_arr[index].fax[j].fax.includes(fax)) {
-          if (this.officerList.findIndex((e) => e.name_inc === position_arr[index].name_inc) === -1) {
-            this.officerList.push(position_arr[index]);
+        for (let i = 0; i < position_arr[index].fax.length; i++) {
+          if (position_arr[index].tel[j].tel.includes(tele) && position_arr[index].fax[i].fax.includes(fax)) {
+            if (this.officerList.findIndex((e) => e.name_inc === position_arr[index].name_inc) === -1) {
+              this.officerList.push(position_arr[index]);
+            }
           }
         }
       }
