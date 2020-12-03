@@ -32,7 +32,9 @@ export class UserEditProfilePage implements OnInit {
         this.email = userData.email;
       });
   }
-
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
   ngOnInit() {
     this.onRegisterForm = this.formBuilder.group({
       fullName: [null, Validators.compose([Validators.required])],

@@ -98,9 +98,9 @@ export class AddPositionPage implements OnInit {
       let data_set = [];
       let data_set_fax = [];
       if (this.officer.tel_id) {
-        for (const iterator of this.officer.tel_id) {
-          await firebase.database().ref('tel/').child(iterator).remove();
-        }
+        // for (const iterator of this.officer.tel_id) {
+        //   await firebase.database().ref('tel/').child(iterator).remove();
+        // }
         let tels = this.tel_all_show.split(',');
 
         for (let index = 0; index < tels.length; index++) {
@@ -108,6 +108,8 @@ export class AddPositionPage implements OnInit {
             let find_index = this.officer.tel.findIndex((e) => e === tels[index]);
             if (find_index === -1) {
               data_set.push(tels[index]);
+            } else {
+              data_set.push(this.officer.tel[find_index]);
             }
           }
         }
@@ -118,11 +120,11 @@ export class AddPositionPage implements OnInit {
             let find_index = this.officer.fax.findIndex((e) => e === faxs[index]);
             if (find_index === -1) {
               data_set_fax.push(faxs[index]);
+            } else {
+              data_set_fax.push(this.officer.fax[find_index]);
             }
           }
         }
-        data_set = data_set.concat(this.officer.tel);
-        data_set_fax = data_set_fax.concat(this.officer.fax);
       } else {
         let tels = this.tel_all_show.split(',');
         for (let index = 0; index < tels.length; index++) {

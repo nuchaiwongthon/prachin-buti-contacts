@@ -40,10 +40,18 @@ export class AdmPositionPage implements OnInit {
       let find_index_tel = position.findIndex((e) => e.id_position === tel[index].id_position);
       if (find_index_tel !== -1) {
         if (tel[index].type_tel === 'tel') {
-          position_arr[find_index_tel].tel = tel[index].tel;
+          if (position_arr[find_index_tel].tel.includes('ต่อ')) {
+            position_arr[find_index_tel].fax = tel[index].tel;
+          } else {
+            position_arr[find_index_tel].tel = tel[index].tel;
+          }
         }
         if (tel[index].type_tel === 'fax') {
-          position_arr[find_index_tel].fax = tel[index].tel;
+          if (position_arr[find_index_tel].tel.includes('ต่อ')) {
+            position_arr[find_index_tel].fax = tel[index].tel;
+          } else {
+            position_arr[find_index_tel].tel = tel[index].tel;
+          }
         }
         let asd = tel.map((e) => {
           if (e.id_position === position_arr[find_index_tel].id_position) {
