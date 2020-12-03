@@ -26,6 +26,16 @@ export class OfficerPositionPage implements OnInit {
   ref_inc = firebase.database().ref('incumbent/');
   ref_tel = firebase.database().ref('tel/');
 
+  slideOpts = {
+    height: 150,
+    slidesPerView: 2,
+    spaceBetween: 1,
+    setWrapperSize: true,
+    centeredSlides: true,
+    direction: 'horizontal',
+    roundLengths: false,
+    noSwipingClass: 'swiper-no-swiping',
+  };
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber) {
     this.user = firebase.auth().currentUser;
     firebase
@@ -62,10 +72,40 @@ export class OfficerPositionPage implements OnInit {
       let find_index_tel = position.findIndex((e) => e.id_position === tel[index].id_position);
       if (find_index_tel !== -1) {
         if (tel[index].type_tel === 'tel') {
-          position_arr[find_index_tel].tel = tel[index].tel;
+          let more = '';
+          position_arr[find_index_tel].tel = [];
+          for (let j = 0; j < tel[index].tel.length; j++) {
+            if (tel[index].tel[j].includes('ต่อ')) {
+              const str = tel[index].tel[j];
+              const n = str.indexOf('ต่อ');
+              const res = str.substring(n, str.length);
+              more = res.replace('ต่อ', '');
+              tel[index].tel[j] = tel[index].tel[j].replace(res, '').trim();
+            }
+
+            position_arr[find_index_tel].tel.push({
+              tel: tel[index].tel[j],
+              more: more.trim().replace(':', ','),
+            });
+          }
         }
         if (tel[index].type_tel === 'fax') {
-          position_arr[find_index_tel].fax = tel[index].tel;
+          let more = '';
+          position_arr[find_index_tel].fax = [];
+          for (let j = 0; j < tel[index].tel.length; j++) {
+            if (tel[index].tel[j].includes('ต่อ')) {
+              const str = tel[index].tel[j];
+              const n = str.indexOf('ต่อ');
+              const res = str.substring(n, str.length);
+              more = res.replace('ต่อ', '');
+              tel[index].tel[j] = tel[index].tel[j].replace(res, '').trim();
+            }
+
+            position_arr[find_index_tel].fax.push({
+              fax: tel[index].tel[j],
+              more: more.trim().replace(':', ','),
+            });
+          }
         }
         let asd = tel.map((e) => {
           if (e.id_position === position_arr[find_index_tel].id_position) {

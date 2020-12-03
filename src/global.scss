@@ -10,20 +10,20 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-@import "~@ionic/angular/css/display.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
 
 .box {
   --ion-item-background: transparent;
@@ -55,19 +55,11 @@
 }
 
 .bg-profile {
-  background-image: linear-gradient(
-    135deg,
-    var(--ion-color-dark),
-    var(--ion-color-primary)
-  );
+  background-image: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
 }
 
 .bg-main {
-  background-image: linear-gradient(
-    -135deg,
-    var(--ion-color-medium),
-    var(--ion-color-light)
-  );
+  background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
 }
 
 // Helpers //
@@ -135,11 +127,7 @@ ion-toolbar.user-profile {
 // Custom toolbar (overriding Shadow DOM)
 ion-toolbar {
   &.ion-color-primary {
-    --ion-color-base: linear-gradient(
-      135deg,
-      var(--ion-color-dark),
-      var(--ion-color-primary)
-    ) !important;
+    --ion-color-base: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary)) !important;
   }
 }
 
@@ -152,11 +140,7 @@ ion-card {
 
 // style for auth pages
 .auth-page {
-  background-image: linear-gradient(
-    135deg,
-    var(--ion-color-dark),
-    var(--ion-color-primary)
-  );
+  background-image: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
 
   .grid {
     padding: 0;
@@ -186,7 +170,7 @@ ion-card {
       height: 66px;
       margin: 20px auto 8px;
       border-radius: 10%;
-      background: url("/assets/img/ic_icon.png") no-repeat;
+      background: url('/assets/img/ic_icon.png') no-repeat;
       background-size: 100%;
     }
 
@@ -224,11 +208,7 @@ ion-menu {
   ion-header {
     ion-toolbar {
       &.ion-color-dark {
-        --ion-color-base: linear-gradient(
-          135deg,
-          var(--ion-color-dark),
-          var(--ion-color-primary)
-        ) !important;
+        --ion-color-base: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary)) !important;
       }
     }
   }
@@ -240,9 +220,22 @@ ion-menu {
     margin-bottom: -2px;
   }
 }
-@import url("https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-  --ion-font-family: "Prompt", sans-serif !important;
+  --ion-font-family: 'Prompt', sans-serif !important;
+}
+.card {
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: -2px -1px 12px -4px rgba(0, 0, 0, 0.46);
+  min-height: 110px;
+  background-color: #fff;
+}
+.position-right {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 999;
 }
