@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>
       <ion-text color="light">
-        <ion-text color="light" class="text1">ค้นหากระทรวง/สังกัด</ion-text>
+        <ion-text color="light" class="text1">ค้นหาหน่วยงาน/สังกัด</ion-text>
       </ion-text>
     </ion-title>
     <ion-buttons slot="end">
@@ -19,7 +19,7 @@
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label>เลือกกระทรวง</ion-label>
+    <ion-label>เลือกหน่วยงาน</ion-label>
     <ion-select [(ngModel)]="searchName" (ionChange)="searchData($event)" interface="popover">
       <ion-select-option *ngFor="let _ministry of ministryList" [value]="_ministry.id">{{_ministry.name_min}}</ion-select-option>
     </ion-select>
@@ -77,7 +77,7 @@
           </ion-slides>
         </ion-col>
         <ion-col size="6">
-          <p>หมายเลขโทรศัพท์สำนักงาน :</p>
+          <p>หมายเลขโทรศัพท์สำนักงาน</p>
           <ion-slides [options]="slideOpts">
             <ion-slide *ngFor="let item of officerList[i].fax; let i = index;" (click)="actionCall(item)">
               <div class="card">

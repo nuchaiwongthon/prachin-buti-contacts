@@ -20,12 +20,12 @@
       <ion-item no-padding no-margin class="animated fadeInUp box">
         <ion-label position="floating">
           <ion-icon name="document-text" item-start></ion-icon>
-          ชื่อกระทรวง
+          ชื่อหน่วยงาน
         </ion-label>
         <ion-input color="secondary" type="text" formControlName="name" [(ngModel)]="name"></ion-input>
       </ion-item>
       <p ion-text class="text08" *ngIf="onAddMinisterForm.get('name').touched && onAddMinisterForm.get('name').hasError('required')">
-        <ion-text color="warning"> กรุณากรอกชื่อกระทรวง </ion-text>
+        <ion-text color="warning"> กรุณากรอกชื่อหน่วยงาน </ion-text>
       </p>
       <div style="margin-top: 20px">
         <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="addMinistry()" [disabled]="!onAddMinisterForm.valid" tappable>

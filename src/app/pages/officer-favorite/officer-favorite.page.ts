@@ -127,7 +127,7 @@ export class OfficerFavoritePage implements OnInit {
     let itemCount = 1;
     if (this.notificationCount > 0) {
       this.notificationList.forEach((officer) => {
-        const officerName = '' + itemCount + '. ' + officer.name_inc + ' ' + officer.name_po + ' (กระทรวง' + officer.ministry_name + ')';
+        const officerName = '' + itemCount + '. ' + officer.name_inc + ' ' + officer.name_po + ' (หน่วยงาน' + officer.ministry_name + ')';
         notificationData.push({
           value: officerName,
           disabled: true,

@@ -23,7 +23,7 @@
     <ion-icon name="search"></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-input type="text" placeholder="ค้นหาจากกระทรวง" [(ngModel)]="searchMinistry" (ionChange)="search('', searchMinistry)" debounce="700"></ion-input>
+    <ion-input type="text" placeholder="ค้นหาจากหน่วยงาน" [(ngModel)]="searchMinistry" (ionChange)="search('', searchMinistry)" debounce="700"></ion-input>
     <ion-icon name="search"></ion-icon>
   </ion-item>
   <ion-list>
@@ -32,7 +32,7 @@
         <ion-label class="ion-text-wrap">
           <b style="color: #000000; font-size: 0.85rem">ชื่อ : {{info.name_po}}</b>
           <ion-text color="secondary">
-            <p>กระทรวง : {{info.ministry_name}}</p>
+            <p>หน่วยงาน : {{info.ministry_name}}</p>
           </ion-text>
           <ion-text color="primary">
             <p>ตำแหน่ง : {{info.name_inc}}</p>

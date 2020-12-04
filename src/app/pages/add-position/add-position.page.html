@@ -18,8 +18,8 @@
   <div padding-top="12px">
     <form [formGroup]="onAddPositionForm" class="list-form">
       <ion-item>
-        <ion-label>เลือกกระทรวง</ion-label>
-        <ion-select placeholder="เลือกกระทรวง" formControlName="id_ministry" [(ngModel)]="id_ministry" interface="popover" (ionChange)="selectMinistry(ministryList, $event)">
+        <ion-label>เลือกหน่วยงาน</ion-label>
+        <ion-select placeholder="เลือกหน่วยงาน" formControlName="id_ministry" [(ngModel)]="id_ministry" interface="popover" (ionChange)="selectMinistry(ministryList, $event)">
           <ion-select-option *ngFor="let data of ministryList" value="{{data.id}}">{{data.name_min}}</ion-select-option>
         </ion-select>
       </ion-item>

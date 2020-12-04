@@ -49,7 +49,7 @@ export class AppComponent {
             },
 
             {
-              title: 'จัดการข้อมูลกระทรวง',
+              title: 'จัดการข้อมูลหน่วยงาน',
               url: '/admin-ministry',
               direct: 'forward',
               icon: 'cog',
@@ -73,7 +73,7 @@ export class AppComponent {
                 this.email = data.val().email;
                 this.appPages = [
                   {
-                    title: 'ค้นหาชื่อกระทรวง/สังกัด',
+                    title: 'ค้นหาชื่อหน่วยงาน/สังกัด',
                     url: '/officer-ministry',
                     direct: 'root',
                     icon: 'search',
@@ -103,7 +103,7 @@ export class AppComponent {
                 this.email = data.val().email;
                 this.appPages = [
                   {
-                    title: 'ค้นหาชื่อกระทรวง/สังกัด',
+                    title: 'ค้นหาชื่อหน่วยงาน/สังกัด',
                     url: '/officer-ministry',
                     direct: 'root',
                     icon: 'search',

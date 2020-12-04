@@ -18,7 +18,7 @@ export class AddMinistryPage implements OnInit {
 
   ministry: any;
   isUpdate = false;
-  titleName = 'เพิ่มข้อมูลกระทรวง';
+  titleName = 'เพิ่มข้อมูลหน่วยงาน';
   dataRun: any = 0;
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public loadingCtrl: LoadingController, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe((params) => {
@@ -27,7 +27,7 @@ export class AddMinistryPage implements OnInit {
         this.name = this.ministry.name_min;
 
         this.isUpdate = true;
-        this.titleName = 'แก้ไขข้อมูลกระทรวง';
+        this.titleName = 'แก้ไขข้อมูลหน่วยงาน';
       }
     });
   }
