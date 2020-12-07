@@ -148,7 +148,6 @@ export class AddPositionPage implements OnInit {
         delete this.onAddPositionForm.value.fax;
         delete this.onAddPositionForm.value.fax_all;
         delete this.onAddPositionForm.value.position;
-        this.onAddPositionForm.value.ministry_name = this.ministry_name;
 
         await firebase
           .database()
@@ -158,7 +157,6 @@ export class AddPositionPage implements OnInit {
             id_ministry: this.onAddPositionForm.value.id_ministry,
             lat: this.onAddPositionForm.value.lat,
             long: this.onAddPositionForm.value.lng,
-            ministry_name: this.onAddPositionForm.value.ministry_name,
             name_po: this.onAddPositionForm.value.name,
           });
         await firebase
@@ -198,7 +196,6 @@ export class AddPositionPage implements OnInit {
           id_ministry: this.onAddPositionForm.value.id_ministry,
           lat: this.onAddPositionForm.value.lat,
           long: this.onAddPositionForm.value.lng,
-          ministry_name: this.onAddPositionForm.value.ministry_name,
           name_po: this.onAddPositionForm.value.name,
         });
 
@@ -318,9 +315,6 @@ export class AddPositionPage implements OnInit {
   }
   async addTelAllUpdate(tel, fax, id) {
     this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
-    console.log('====================================');
-    console.log(this.number_position_run);
-    console.log('====================================');
     await firebase
       .database()
       .ref(`tel/`)
