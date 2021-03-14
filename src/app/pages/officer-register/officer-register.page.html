@@ -15,7 +15,6 @@
       </div>
       <ion-item class="ion-no-padding" no-margin class="animated fadeInUp box">
         <ion-label position="floating">
-          <ion-icon name="person" item-start></ion-icon>
           ชื่อ-นามสกุล
         </ion-label>
         <ion-input color="secondary" type="text" formControlName="fullName" [(ngModel)]="fullname"></ion-input>
@@ -26,7 +25,6 @@
 
       <ion-item class="ion-no-padding" class="animated fadeInUp box">
         <ion-label position="floating">
-          <ion-icon name="pin" item-start></ion-icon>
           ที่อยู่
         </ion-label>
         <ion-input color="secondary" type="text" formControlName="address" [(ngModel)]="address"></ion-input>
@@ -35,10 +33,60 @@
         <ion-text color="warning"> กรุณากรอกที่อยู่ </ion-text>
       </p>
 
+      <ion-item class="ion-no-padding" class="animated fadeInUp box">
+        <ion-label position="floating">
+          หน่วยงาน
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="ministry" [(ngModel)]="ministry"></ion-input>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onRegisterForm.get('ministry').touched && onRegisterForm.get('ministry').hasError('required')">
+        <ion-text color="warning"> กรุณากรอกหน่วยงาน </ion-text>
+      </p>
+
+      <ion-item class="ion-no-padding" class="animated fadeInUp box">
+        <ion-label position="floating">
+          ตำเเหน่งงานราชการ
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="incumbent" [(ngModel)]="incumbent"></ion-input>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onRegisterForm.get('incumbent').touched && onRegisterForm.get('incumbent').hasError('required')">
+        <ion-text color="warning"> กรุณากรอกตำเเหน่งงานราชการ </ion-text>
+      </p>
+
+      <ion-item class="ion-no-padding" class="animated fadeInUp box">
+        <ion-label position="floating">
+          เลขบัตรประชาชน
+        </ion-label>
+        <ion-input color="secondary" type="number" formControlName="id_card" [(ngModel)]="id_card" maxlength="15"></ion-input>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onRegisterForm.get('id_card').touched && onRegisterForm.get('id_card').hasError('required')">
+        <ion-text color="warning"> กรุณากรอกเลขบัตรประชาชน </ion-text>
+      </p>
+
+      <ion-item class="ion-no-padding" class="animated fadeInUp box">
+        <ion-label position="floating">
+          <ion-icon name="pin" item-start></ion-icon>
+          สถานที่ทำงาน
+        </ion-label>
+        <ion-textarea color="secondary" type="text" formControlName="position" [(ngModel)]="position"></ion-textarea>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onRegisterForm.get('position').touched && onRegisterForm.get('position').hasError('required')">
+        <ion-text color="warning"> กรุณากรอกสถานที่ทำงาน </ion-text>
+      </p>
+
+      <ion-item class="ion-no-padding" class="animated fadeInUp box">
+        <ion-label position="floating">
+          เบอร์โทรศัพท์
+        </ion-label>
+        <ion-input color="secondary" type="tel" formControlName="tel" [(ngModel)]="tel" maxlength="10"></ion-input>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onRegisterForm.get('tel').touched && onRegisterForm.get('tel').hasError('required')">
+        <ion-text color="warning"> กรุณากรอกเบอร์โทรศัพท์ </ion-text>
+      </p>
+
       <ion-text color="light" class="ion-margin-top">ข้อมูลการใช้งาน</ion-text>
       <ion-item class="ion-no-padding" class="animated fadeInUp box">
         <ion-label position="floating">
-          <ion-icon name="mail" item-start></ion-icon>
           Username (ระบุ Email)
         </ion-label>
         <ion-input color="secondary" type="text" formControlName="username" [(ngModel)]="email"></ion-input>
@@ -49,7 +97,6 @@
 
       <ion-item class="ion-no-padding" class="animated fadeInUp box">
         <ion-label position="floating">
-          <ion-icon name="lock" item-start></ion-icon>
           Password
         </ion-label>
         <ion-input color="secondary" type="password" formControlName="password" [(ngModel)]="password"></ion-input>
@@ -60,7 +107,6 @@
 
       <ion-item class="ion-no-padding" class="animated fadeInUp box">
         <ion-label position="floating">
-          <ion-icon name="lock" item-start></ion-icon>
           Confirm Password
         </ion-label>
         <ion-input color="secondary" type="password" formControlName="re-password" [(ngModel)]="rePassword"></ion-input>

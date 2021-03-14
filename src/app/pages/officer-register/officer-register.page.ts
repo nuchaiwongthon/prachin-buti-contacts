@@ -14,6 +14,11 @@ export class OfficerRegisterPage implements OnInit {
   number: string;
   fullname: any;
   address: any;
+  incumbent: any;
+  id_card: any;
+  position: any;
+  ministry: any;
+  tel: any;
   email: any;
   password: any;
   rePassword: any;
@@ -41,6 +46,11 @@ export class OfficerRegisterPage implements OnInit {
     this.onRegisterForm = this.formBuilder.group({
       fullName: [null, Validators.compose([Validators.required])],
       address: [null, Validators.compose([Validators.required])],
+      incumbent: [null, Validators.compose([Validators.required])],
+      id_card: [null, Validators.compose([Validators.required])],
+      position: [null, Validators.compose([Validators.required])],
+      ministry: [null, Validators.compose([Validators.required])],
+      tel: [null, Validators.compose([Validators.required])],
       username: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])],
       're-password': [null, Validators.compose([Validators.required])],
@@ -65,6 +75,11 @@ export class OfficerRegisterPage implements OnInit {
               verify: 0,
               id_type: `UT00002`,
               uid: value.user.uid,
+              incumbent: this.incumbent,
+              id_card: this.id_card,
+              position: this.position,
+              ministry: this.ministry,
+              tel: this.tel,
             })
             .then((isSuccess) => {
               this.showAlert('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับข้อมูล\nรอเจ้าหน้าที่ทำการตรวจสอบ');

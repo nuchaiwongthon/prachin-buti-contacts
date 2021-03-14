@@ -37,6 +37,8 @@ export class AdminCheckUserPage implements OnInit {
   }
 
   async view(user: any) {
+    console.log(user);
+
     const userData = [];
 
     const name = 'ชื่อ : ' + user.name_user;
@@ -56,12 +58,30 @@ export class AdminCheckUserPage implements OnInit {
       value: email,
       disabled: true,
     });
-
+    if (user.id_type === 'UT00002') {
+      userData.push({
+        value: 'หน่วยงาน : ' + user.ministry,
+        disabled: true,
+      });
+      userData.push({
+        value: 'รหัส ปชช. : ' + user.id_card,
+        disabled: true,
+      });
+      userData.push({
+        value: 'สถานที่ : ' + user.position,
+        disabled: true,
+      });
+      userData.push({
+        value: 'ตำแหน่ง : ' + user.incumbent,
+        disabled: true,
+      });
+    }
     const alert = await this.alertCtrl.create({
       header: 'ข้อมูลผู้ใช้งาน',
       message: 'ข้อมูลผู้ใช้งานใหม่',
       inputs: userData,
       backdropDismiss: false,
+      cssClass: 'custom-alert',
       buttons: [
         {
           text: 'ปิด',
