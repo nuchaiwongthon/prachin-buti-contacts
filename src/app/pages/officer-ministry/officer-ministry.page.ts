@@ -186,14 +186,18 @@ export class OfficerMinistryPage implements OnInit {
     }
   }
 
-  async actionCall(tel: string) {
-    this.callNumber.callNumber(tel, true);
+  async actionCall(tel: any) {
+    this.callNumber.callNumber(tel.tel, true);
   }
 
   actionMap(lat: string, lng: string) {
     const destination = [Number(lat), Number(lng)];
     // this.launchNavigator.navigate(destination);
-    window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`);
+    if (lat && lng) {
+      window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`);
+    } else {
+      alert('ไม่ได้ระบุตำแหน่ง');
+    }
   }
 
   async actionFavorite(officer: any) {

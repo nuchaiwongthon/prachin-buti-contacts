@@ -118,7 +118,7 @@ export class OfficerNotePage implements OnInit {
     this.navCtrl.navigateForward('/officer-add-note', navigationExtras);
   }
 
-  actionCall(tel: string) {
-    this.callNumber.callNumber(tel, true);
+  actionCall(tel: any) {
+    this.callNumber.callNumber(tel.tel, true);
   }
 }
