@@ -26,10 +26,10 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "call-number": "^1.0.1",
-    "cordova-android": "8.1.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-dialogs": "^2.0.2",
     "firebase": "^7.22.1",
+    "mx.ferreyra.callnumber": "0.0.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^5.0.5",
@@ -46,6 +46,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-android": "^9.0.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
@@ -68,7 +69,8 @@
   "cordova": {
     "plugins": {
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-        "GOOGLE_API_KEY_FOR_ANDROID": "AIzaSyCj6_SvlRMmTfNY8j3S-1y4KWCxmg7Cc3s"
+        "GOOGLE_API_KEY_FOR_ANDROID": "AIzaSyCj6_SvlRMmTfNY8j3S-1y4KWCxmg7Cc3s",
+        "OKHTTP_VERSION": "3.12.0"
       },
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-whitelist": {},
@@ -78,7 +80,8 @@
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "call-number": {}
     },
     "platforms": [
       "android"

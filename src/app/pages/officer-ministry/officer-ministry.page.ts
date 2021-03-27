@@ -187,7 +187,13 @@ export class OfficerMinistryPage implements OnInit {
   }
 
   async actionCall(tel: any) {
-    this.callNumber.callNumber(tel.tel, true);
+    console.log(tel);
+    if (tel.tel) {
+      this.callNumber.callNumber(tel.tel, true);
+    }
+    if (tel.fax) {
+      this.callNumber.callNumber(tel.fax, true);
+    }
   }
 
   actionMap(lat: string, lng: string) {
