@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -20,20 +20,25 @@ export interface Pages {
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public appPages: Array<Pages>;
 
   name: any;
   email: any;
 
   position: any;
+  path: any;
   constructor(private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, public navCtrl: NavController) {
     firebase.initializeApp(environment.firebase);
+  }
+  ngOnInit() {
+    this.initializeApp();
     firebase.auth().onAuthStateChanged((user) => {
       if (user !== null) {
         if (user.email === 'admin@gmail.com') {
           this.name = 'Admin';
           this.email = user.email;
+          this.path = 'user-edit-profile';
           this.appPages = [
             {
               title: 'คำขออนุมัติขอเป็นสมาชิกราชการ',
@@ -69,6 +74,7 @@ export class AppComponent {
             .equalTo(user.email)
             .on('child_added', (data) => {
               if (data.val().id_type === 'UT00003') {
+                this.path = 'user-edit-profile';
                 this.name = data.val().name_user;
                 this.email = data.val().email;
                 this.appPages = [
@@ -101,6 +107,7 @@ export class AppComponent {
                 // this.position = 1;
                 this.name = data.val().name_user;
                 this.email = data.val().email;
+                this.path = 'admin-edit-profile';
                 this.appPages = [
                   {
                     title: 'ค้นหาชื่อหน่วยงาน/สังกัด',
@@ -139,7 +146,6 @@ export class AppComponent {
       }
     });
   }
-
   initializeApp() {
     this.platform
       .ready()
@@ -151,13 +157,7 @@ export class AppComponent {
   }
 
   goToEditProfile() {
-    if (this.position === 9) {
-      this.navCtrl.navigateForward('admin-edit-profile');
-    } else if (this.position === 1) {
-      this.navCtrl.navigateForward('user-edit-profile');
-    } else {
-      this.navCtrl.navigateForward('user-edit-profile');
-    }
+    this.navCtrl.navigateForward(this.path);
   }
 
   logout() {

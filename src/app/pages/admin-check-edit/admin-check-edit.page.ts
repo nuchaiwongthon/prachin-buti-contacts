@@ -47,7 +47,36 @@ export class AdminCheckEditPage implements OnInit {
         disabled: true,
       });
     }
-
+    if (user.ministry !== undefined) {
+      userData.push({
+        value: 'หน่วยงาน : ' + user.ministry,
+        disabled: true,
+      });
+    }
+    if (user.id_card !== undefined) {
+      userData.push({
+        value: 'รหัส ปชช. : ' + user.id_card,
+        disabled: true,
+      });
+    }
+    if (user.position !== undefined) {
+      userData.push({
+        value: 'สถานที่ : ' + user.position,
+        disabled: true,
+      });
+    }
+    if (user.incumbent !== undefined) {
+      userData.push({
+        value: 'ตำแหน่ง : ' + user.incumbent,
+        disabled: true,
+      });
+    }
+    if (user.tel !== undefined) {
+      userData.push({
+        value: 'เบอร์โทร : ' + user.tel,
+        disabled: true,
+      });
+    }
     const alert = await this.alertCtrl.create({
       header: 'ข้อมูลผู้ใช้งาน',
       message: 'ข้อมูลการแก้ไขผู้ใช้งาน',

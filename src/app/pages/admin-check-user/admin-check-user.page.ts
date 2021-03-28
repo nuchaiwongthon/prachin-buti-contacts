@@ -75,6 +75,10 @@ export class AdminCheckUserPage implements OnInit {
         value: 'ตำแหน่ง : ' + user.incumbent,
         disabled: true,
       });
+      userData.push({
+        value: 'เบอร์โทรศัพท์ : ' + user.tel,
+        disabled: true,
+      });
     }
     const alert = await this.alertCtrl.create({
       header: 'ข้อมูลผู้ใช้งาน',
