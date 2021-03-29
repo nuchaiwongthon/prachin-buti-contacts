@@ -84,7 +84,7 @@ export class AdminCheckUserPage implements OnInit {
       header: 'ข้อมูลผู้ใช้งาน',
       message: 'ข้อมูลผู้ใช้งานใหม่',
       inputs: userData,
-      backdropDismiss: false,
+      backdropDismiss: true,
       cssClass: 'custom-alert',
       buttons: [
         {

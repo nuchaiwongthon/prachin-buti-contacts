@@ -169,7 +169,7 @@ export class OfficerMinistryPage implements OnInit {
         header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
         message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationShow + ' รายการ',
         inputs: notificationData,
-        backdropDismiss: false,
+        backdropDismiss: true,
         buttons: [
           {
             text: 'ปิด',

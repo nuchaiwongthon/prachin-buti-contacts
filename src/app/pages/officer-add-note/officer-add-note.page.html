@@ -43,9 +43,9 @@
           <ion-icon name="call" item-start></ion-icon>
           หมายเลขโทรศัพท์
         </ion-label>
-        <ion-input color="secondary" type="tel" formControlName="tel" [(ngModel)]="tel"></ion-input>
+        <ion-input color="secondary" type="phone" formControlName="phone" [(ngModel)]="phone"></ion-input>
       </ion-item>
-      <p ion-text class="text08" *ngIf="onAddNoteForm.get('tel').touched && onAddNoteForm.get('tel').hasError('required')">
+      <p ion-text class="text08" *ngIf="onAddNoteForm.get('phone').touched && onAddNoteForm.get('phone').hasError('required')">
         <ion-text color="warning"> กรุณากรอกหมายเลขโทรศัพท์ </ion-text>
       </p>
 

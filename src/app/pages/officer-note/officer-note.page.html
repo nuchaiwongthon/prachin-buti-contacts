@@ -27,7 +27,7 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="success" (click)="actionCall(note.tel)">
+        <ion-item-option color="success" (click)="actionCall(note)">
           <ion-icon name="call"></ion-icon>
           <p>โทรออก</p>
         </ion-item-option>
@@ -35,7 +35,7 @@
           <ion-icon name="create"></ion-icon>
           <p>แก้ไข</p>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="actionDelete(note.uid)">
+        <ion-item-option color="danger" (click)="actionDelete(note)">
           <ion-icon name="trash"></ion-icon>
           <p>ลบ</p>
         </ion-item-option>

@@ -4,6 +4,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import * as firebase from 'Firebase';
 import { snapshotToArray } from '../admin-ministry/adm-ministry.page';
 import { NavigationExtras } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-officer-note',
@@ -61,7 +62,7 @@ export class OfficerNotePage implements OnInit {
         header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
         message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationCount + ' รายการ',
         inputs: notificationData,
-        backdropDismiss: false,
+        backdropDismiss: true,
         buttons: [
           {
             text: 'ปิด',
@@ -81,7 +82,7 @@ export class OfficerNotePage implements OnInit {
     this.navCtrl.navigateForward('/officer-add-note');
   }
 
-  async actionDelete(uid: string) {
+  async actionDelete(data: any) {
     const alert = await this.alertCtrl.create({
       header: 'ยืนยัน!',
       message: 'คุณต้องการลบรายการนี้ใช่หรือไม่?',
@@ -96,11 +97,15 @@ export class OfficerNotePage implements OnInit {
         },
         {
           text: 'ใช่',
-          handler: () => {
-            firebase
+          handler: async () => {
+            await firebase
               .database()
-              .ref('note/' + this.user.uid + '/' + uid)
-              .remove();
+              .ref('note/')
+              .child(data.id_note)
+              .remove()
+              .then((value) => {
+                this.getNotes();
+              });
           },
         },
       ],
@@ -119,12 +124,8 @@ export class OfficerNotePage implements OnInit {
   }
 
   actionCall(tel: any) {
-    console.log(tel);
-    if (tel.tel) {
-      this.callNumber.callNumber(tel.tel, true);
-    }
-    if (tel.fax) {
-      this.callNumber.callNumber(tel.fax, true);
+    if (tel.phone) {
+      this.callNumber.callNumber(tel.phone, true);
     }
   }
 }

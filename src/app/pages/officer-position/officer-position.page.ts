@@ -193,7 +193,7 @@ export class OfficerPositionPage implements OnInit {
         header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
         message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationCount + ' รายการ',
         inputs: notificationData,
-        backdropDismiss: false,
+        backdropDismiss: true,
         buttons: [
           {
             text: 'ปิด',

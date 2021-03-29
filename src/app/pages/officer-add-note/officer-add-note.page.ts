@@ -21,16 +21,18 @@ export class OfficerAddNotePage implements OnInit {
 
   title: string;
   detail: string;
-  tel: string;
+  phone: string;
 
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.user = firebase.auth().currentUser;
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.note = this.router.getCurrentNavigation().extras.state.note;
+        console.log(  this.note);
+        
         this.title = this.note.title;
         this.detail = this.note.detail;
-        this.tel = this.note.tel;
+        this.phone = this.note.phone;
 
         this.isUpdate = true;
         this.titleName = 'แก้ไขบันทึกความทรงจำ';
@@ -42,7 +44,7 @@ export class OfficerAddNotePage implements OnInit {
     this.onAddNoteForm = this.formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       detail: [null, Validators.compose([Validators.required])],
-      tel: [null, Validators.compose([Validators.required])],
+      phone: [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -54,7 +56,7 @@ export class OfficerAddNotePage implements OnInit {
         .update({
           title: this.onAddNoteForm.value.title,
           detail: this.onAddNoteForm.value.detail,
-          phone: this.onAddNoteForm.value.tel,
+          phone: this.onAddNoteForm.value.phone,
         });
       this.navCtrl.navigateBack('/officer-note');
     } else {
@@ -67,7 +69,7 @@ export class OfficerAddNotePage implements OnInit {
           title: this.onAddNoteForm.value.title,
           id_user: localStorage.getItem('user'),
           detail: this.onAddNoteForm.value.detail,
-          phone: this.onAddNoteForm.value.tel,
+          phone: this.onAddNoteForm.value.phone,
         });
       this.navCtrl.navigateBack('/officer-note');
     }

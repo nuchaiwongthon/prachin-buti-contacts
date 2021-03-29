@@ -81,7 +81,7 @@ export class AdminCheckEditPage implements OnInit {
       header: 'ข้อมูลผู้ใช้งาน',
       message: 'ข้อมูลการแก้ไขผู้ใช้งาน',
       inputs: userData,
-      backdropDismiss: false,
+      backdropDismiss: true,
       buttons: [
         {
           text: 'ปิด',
