@@ -98,9 +98,9 @@ export class AddPositionPage implements OnInit {
       let data_set = [];
       let data_set_fax = [];
       if (this.officer.tel_id) {
-        // for (const iterator of this.officer.tel_id) {
-        //   await firebase.database().ref('tel/').child(iterator).remove();
-        // }
+        for (const iterator of this.officer.tel_id) {
+          await firebase.database().ref('tel/').child(iterator).remove();
+        }
         let tels = this.tel_all_show.split(',');
 
         for (let index = 0; index < tels.length; index++) {
@@ -314,6 +314,7 @@ export class AddPositionPage implements OnInit {
       });
   }
   async addTelAllUpdate(tel, fax, id) {
+   
     this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
     await firebase
       .database()
@@ -324,6 +325,7 @@ export class AddPositionPage implements OnInit {
         type_tel: 'fax',
         tel: fax,
       });
+  
     this.number_tel_run = (await this.getLastRecordTel()) !== undefined ? await this.getLastRecordTel() : 0;
     await firebase
       .database()
