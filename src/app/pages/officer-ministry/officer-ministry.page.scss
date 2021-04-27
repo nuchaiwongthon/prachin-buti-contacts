@@ -1,8 +1,10 @@
 #notification-badge {
   position: absolute;
-  top: -0.2rem;
-  right: -0.2rem;
+  top: 0rem;
+  right: -0.3rem;
   opacity: 0.9;
+  z-index: 999;
+  font-size: 8px !important;
 }
 ion-card:nth-of-type(even) {
   background-color: antiquewhite;

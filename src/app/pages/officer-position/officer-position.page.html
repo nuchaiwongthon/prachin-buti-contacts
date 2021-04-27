@@ -9,9 +9,9 @@
       </ion-text>
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="showNotification()">
+      <ion-button size="small" color="medium" (click)="showNotification()">
+        <ion-badge id="notification-badge" color="danger" *ngIf="notificationShow > 0">{{notificationShow}}</ion-badge>
         <ion-icon name="notifications"></ion-icon>
-        <ion-badge color="dark" slot="end" *ngIf="notificationCount > 0">{{notificationCount}}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

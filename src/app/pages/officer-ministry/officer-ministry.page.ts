@@ -11,10 +11,10 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./officer-ministry.page.scss'],
 })
 export class OfficerMinistryPage implements OnInit {
-  notificationCount = 0;
   notificationShow = 0;
   notificationList = [];
-
+  checkNotify = false;
+  
   ministryList = [];
   officerList = [];
   favoriteList = [];
@@ -37,15 +37,62 @@ export class OfficerMinistryPage implements OnInit {
     roundLengths: false,
     noSwipingClass: 'swiper-no-swiping',
   };
+
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public modalCtrl: ModalController, public toastCtrl: ToastController, private callNumber: CallNumber) {
     this.user = firebase.auth().currentUser;
+
     firebase
       .database()
       .ref('position/')
-      .once('value', (data) => {
-        data.forEach((snapshot) => {
-          this.notificationCount++;
+      .on('value', (data) => {
+        let arr = [];
+        data.forEach((dataSnapshot) => {
+          const item = dataSnapshot.val();
+          if (this.checkNotify) {
+            arr.push({
+              number: Number(dataSnapshot.key.replace('P', '')),
+              id_ministry: item.id_ministry,
+              name_po: item.name_po,
+              id: dataSnapshot.key,
+            });
+          }
         });
+        if (this.checkNotify) {
+          let sort = arr.sort(function (a, b) {
+            return b.number - a.number;
+          });
+          let ministry = '';
+          firebase
+            .database()
+            .ref('ministry/')
+            .on('value', (d) => {
+              d.forEach((dataSnapshot) => {
+                if (dataSnapshot.key === sort[0].id_ministry) {
+                  ministry = dataSnapshot.val().name_min;
+                }
+              });
+              let j = 0;
+              firebase
+                .database()
+                .ref('incumbent/')
+                .on('value', (f) => {
+                  f.forEach((snapshot) => {
+                    if (snapshot.val().id_position === sort[0].id) {
+                      if (j === 1) {
+                        this.notificationList.push({
+                          name_po: sort[0].name_po,
+                          ministry_name: ministry,
+                          name_inc: snapshot.val().name_inc,
+                        });
+                        this.notificationShow = this.notificationList.length;
+                      }
+                      j++;
+                    }
+                  });
+                });
+            });
+        }
+        this.checkNotify = true;
       });
   }
   ionViewDidEnter() {
@@ -153,37 +200,29 @@ export class OfficerMinistryPage implements OnInit {
 
   async showNotification() {
     const notificationData = [];
-    let itemCount = 1;
-    if (this.notificationShow > 0) {
-      this.notificationList.forEach((officer) => {
-        const officerName = '' + itemCount + '. ' + officer.name_inc + ' ' + officer.name_po + ' (หน่วยงาน' + officer.ministry_name + ')';
-        notificationData.push({
-          value: officerName,
-          disabled: true,
-        });
-        itemCount++;
+    this.notificationList.forEach((officer, index) => {
+      notificationData.push({
+        value: `${index + 1}. ${officer.name_inc} ${officer.name_po} (หน่วยงาน ${officer.ministry_name})`,
+        disabled: true,
       });
-      // this.notificationCount = 0;
-      // this.notificationList = [];
-      const alert = await this.alertCtrl.create({
-        header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
-        message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationShow + ' รายการ',
-        inputs: notificationData,
-        backdropDismiss: true,
-        buttons: [
-          {
-            text: 'ปิด',
-            role: 'cancel',
-            handler: () => {
-              this.notificationCount += this.notificationShow;
-              this.notificationShow = 0;
-              this.notificationList = [];
-            },
+    });
+    const alert = await this.alertCtrl.create({
+      header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
+      message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationShow + ' รายการ',
+      inputs: notificationData,
+      backdropDismiss: true,
+      buttons: [
+        {
+          text: 'ปิด',
+          role: 'cancel',
+          handler: () => {
+            this.notificationShow = 0;
+            this.notificationList = [];
           },
-        ],
-      });
-      alert.present();
-    }
+        },
+      ],
+    });
+    alert.present();
   }
 
   async actionCall(tel: any) {
@@ -264,17 +303,10 @@ export class OfficerMinistryPage implements OnInit {
     return new Promise((resolve, reject) => {
       let data_set = [];
       this.ref_inc.on('value', (resp) => {
-        let count = 1;
         resp.forEach((data) => {
           const item = data.val();
           item.id_inc = data.key;
           data_set.push(item);
-          if (count > this.notificationCount) {
-            this.notificationShow = count - this.notificationCount;
-            // this.notificationCount++;
-            this.notificationList.push(item);
-          }
-          count++;
         });
 
         resolve(data_set);

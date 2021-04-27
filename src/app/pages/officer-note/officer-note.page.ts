@@ -12,7 +12,7 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./officer-note.page.scss'],
 })
 export class OfficerNotePage implements OnInit {
-  notificationCount: number;
+  notificationShow = 0;
   notificationList = [];
 
   noteList = [];
@@ -48,34 +48,29 @@ export class OfficerNotePage implements OnInit {
 
   async showNotification() {
     const notificationData = [];
-    let itemCount = 1;
-    if (this.notificationCount > 0) {
-      this.notificationList.forEach((officer) => {
-        const officerName = '' + itemCount + '. ' + officer.name_inc + ' ' + officer.name_po + ' (หน่วยงาน' + officer.ministry_name + ')';
-        notificationData.push({
-          value: officerName,
-          disabled: true,
-        });
-        itemCount++;
+    this.notificationList.forEach((officer, index) => {
+      notificationData.push({
+        value: `${index + 1}. ${officer.name_inc} ${officer.name_po} (หน่วยงาน ${officer.ministry_name})`,
+        disabled: true,
       });
-      const alert = await this.alertCtrl.create({
-        header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
-        message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationCount + ' รายการ',
-        inputs: notificationData,
-        backdropDismiss: true,
-        buttons: [
-          {
-            text: 'ปิด',
-            role: 'cancel',
-            handler: () => {
-              this.notificationCount = 0;
-              this.notificationList = [];
-            },
+    });
+    const alert = await this.alertCtrl.create({
+      header: 'แจ้งเตือนอัพเดตข้อมูลราชการ',
+      message: 'มีข้อมูลราชการอัพเดตเพิ่ม ' + this.notificationShow + ' รายการ',
+      inputs: notificationData,
+      backdropDismiss: true,
+      buttons: [
+        {
+          text: 'ปิด',
+          role: 'cancel',
+          handler: () => {
+            this.notificationShow = 0;
+            this.notificationList = [];
           },
-        ],
-      });
-      alert.present();
-    }
+        },
+      ],
+    });
+    alert.present();
   }
 
   goToAddNote() {
